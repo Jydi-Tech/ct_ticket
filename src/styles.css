@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    color: white;
+    font-family: "Quicksand", sans-serif;
+    font-size: 18px;
+    background-color: rgb(10, 8, 15);
+    margin: 0;
+    height: 100%;
+}
+
