@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../api"
+		},
+		{
+			"path": "../../../../etc/apache2"
+		},
+		{
+			"path": "../ct_ticket_dist"
+		}
+	],
+	"settings": {}
+}
