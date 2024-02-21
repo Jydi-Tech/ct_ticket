@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DataService } from '../data.service';
-;import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-employees',
@@ -13,27 +13,17 @@ import { DataService } from '../data.service';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent {
-  
-  constructor(private dataService: DataService) {
-    
-    console.log('entered employee constructor component');
-    
-  }
-
+  constructor(private dataService: DataService) {  }
 
   addAdminUser(username: string, password: string, email: string) {
-    console.log('entered addAdminUser');
     const newUser = {
-      username: username,
-      password: password, // In a real app, you'd hash this before sending
-      email: email,
+      username: username.trim(),
+      password: password.trim(), // In a real app, you'd hash this before sending
+      email: email.trim(),
       role: 'admin'
     };
-    console.log('created new user '+ newUser);
 
-    this.dataService
-      .createItem("Ticket_DB.Users", newUser)
-      .subscribe({
+    this.dataService.createItem("users", newUser).subscribe({
       next: response => console.log('Admin user added!', response),
       error: error => console.error('Error adding user', error),
       complete: () => console.log('Request complete') // Optional if you need to handle completion
