@@ -1,0 +1,9 @@
+{
+    "/api": {
+      "target": "http://ct_ticket.local",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  

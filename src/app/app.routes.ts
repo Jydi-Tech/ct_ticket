@@ -5,6 +5,7 @@ import { InvoicesComponent } from './invoices/invoices.component';
 import { CustomersComponent } from './customers/customers.component';
 import { EmployeesComponent } from './employees/employees.component';
 
+
 export const routes: Routes = [
     { path: '', component: MainComponent},
     { path: 'Main', component: MainComponent},
