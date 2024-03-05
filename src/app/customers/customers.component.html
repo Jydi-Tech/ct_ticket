@@ -1,1 +1,14 @@
-<p>customers works!</p>
+<div id="buttonsDiv">
+    <div  class="headerButtonCell"
+          style="cursor: pointer;"
+          *ngFor="let buttonLabel of buttonLabels;"
+          (click)="onButtonClick(buttonLabel)"
+          routerLink="{{buttonLabel}}">
+      <a id="headerLinkText" 
+          class="headerLinkText" 
+          routerLink="{{buttonLabel}}">
+        {{buttonLabel}}</a>
+    </div>
+  </div> 
+  <br>
+  <app-customers-read></app-customers-read>

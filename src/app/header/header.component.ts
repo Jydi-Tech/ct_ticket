@@ -13,7 +13,6 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  
   public buttonLabels : string[] = BUTTON_LABELS;
   public labelPercent : string = HEADER_BUTTON_CELL_WIDTH_VAR;
   headerImage: string = environment.imageUrl + "/CajunTechLogoWhite.png";

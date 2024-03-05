@@ -1,0 +1,15 @@
+<div class="customers">
+    <input type="text" #username placeholder="Username" required>
+    <input type="password" #password placeholder="Password" required>
+    <input type="email" #email placeholder="Email" required>
+  
+    <!-- (click) passes input value to addAdminUser() and then clears the input -->
+    <button 
+    type="button" class="add-button" (click)="
+    addCustomer(username.value, password.value, email.value); 
+    username.value=''; 
+    password.value=''; 
+    email.value='';">
+        add Customer
+    </button>
+</div>

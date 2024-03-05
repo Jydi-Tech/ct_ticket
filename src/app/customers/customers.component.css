@@ -1,0 +1,21 @@
+.headerButton {
+    font-size: x-large;
+    display: block;
+    background-color: rgb(132, 98, 187);
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  #buttonsDiv{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 0.5%;
+  }
+
+  .headerButtonCell {
+    padding: .5%;
+    background-color: rgb(132, 98, 187);
+    text-align: center;
+    display: block;
+  }
