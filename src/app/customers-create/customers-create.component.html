@@ -1,15 +1,44 @@
 <div class="customers">
-    <input type="text" #username placeholder="Username" required>
-    <input type="password" #password placeholder="Password" required>
-    <input type="email" #email placeholder="Email" required>
-  
+    <input type="text" #FirstName placeholder="FirstName" required>
+    <input type="text" #LastName placeholder="LastName" required>
+    <input type="tel" #Phone placeholder="Phone" required>
+    <input type="text" #Address placeholder="Address" required>
+    <input type="text" #City placeholder="City" required>
+    <input type="text" #State placeholder="State" required>
+    <input type="number" #Zip placeholder="Zip" required>
+    <input type="email" #Email placeholder="Email" required>
+    <input type="text" #RefferalSource name="Refferal Source" list="refferal" required>
+    <datalist id="refferal">
+        <option value="Website">
+        <option value="Radio Add">
+        <option value="Friend or Family">
+        <option value="Another Buissness">
+        <option value="Returning Customer">
+        <option value="other">
+    </datalist>
     <!-- (click) passes input value to addAdminUser() and then clears the input -->
-    <button 
-    type="button" class="add-button" (click)="
-    addCustomer(username.value, password.value, email.value); 
-    username.value=''; 
-    password.value=''; 
-    email.value='';">
-        add Customer
+    <button (click)="
+    addCustomer(
+        FirstName.value, 
+        LastName.value, 
+        Phone.value, 
+        Address.value, 
+        City.value, 
+        State.value, 
+        Zip.value, 
+        Email.value, 
+        RefferalSource.value
+    ); 
+    FirstName.value=''; 
+    LastName.value=''; 
+    Phone.value=''; 
+    Address.value=''; 
+    City.value=''; 
+    State.value=''; 
+    Zip.value=''; 
+    Email.value=''; 
+    RefferalSource.value='';
+    ">
+        Add Customer
     </button>
 </div>

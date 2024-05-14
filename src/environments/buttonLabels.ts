@@ -6,16 +6,18 @@
 // and I don't know know to pass that info
 // so TODO make that info pass
 export const BUTTON_LABELS : string[] = new Array(
-    "Main",
+    "Register",
     "Tickets",
     "Invoices",
     "Customers",
-    "Employees"
+    "Employees",
+    "Reports",
     );
 export const CUSTOMER_BUTTON_LABELS : string[] = new Array(
-    "Add a Customer", 
+    "Add Customer", 
     "Delete Selected", 
-    "Edit Customer"
+    "Edit Customer",
+    "Search Customers",
 );
 
 export const BUTTONLABLESTOTAL : number = BUTTON_LABELS.length;

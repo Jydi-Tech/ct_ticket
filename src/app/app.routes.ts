@@ -5,9 +5,10 @@ import { InvoicesComponent } from './invoices/invoices.component';
 import { CustomersComponent } from './customers/customers.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { CustomersCreateComponent } from './customers-create/customers-create.component';
-//import { CustomersDeleteComponent } from './customers-delete/customers-delete.component';
-//import { CustomersUpdateComponent } from './customers-update/customers-update.component';
+import { CustomersDeleteComponent } from './customers-delete/customers-delete.component';
+import { CustomersUpdateComponent } from './customers-update/customers-update.component';
 import { CustomersReadComponent } from './customers-read/customers-read.component';
+import { ReportsComponent } from './reports/reports.component';
 //import { EmployeesCreateComponent } from './employees-create/employees-create.component';
 //import { EmployeesDeleteComponent } from './employees-delete/employees-delete.component';
 //import { EmployeesUpdateComponent } from './employees-update/employees-update.component';
@@ -35,7 +36,7 @@ import { CustomersReadComponent } from './customers-read/customers-read.componen
 
 export const routes: Routes = [
 
-    { path: '**', redirectTo: ''},
+    
     { path: '', component: MainComponent},
     { path: 'Main', component: MainComponent},
     { path: 'Tickets', component: TicketsComponent},
@@ -43,9 +44,10 @@ export const routes: Routes = [
     { path: 'Customers', component: CustomersComponent},
     { path: 'Employees', component: EmployeesComponent},
     { path: 'Customers/Create', component: CustomersCreateComponent},
- //   { path: 'Customers/Delete', component: CustomersDeleteComponent},
- //   { path: 'Customers/Update', component: CustomersUpdateComponent},
+    { path: 'Customers/Delete', component: CustomersDeleteComponent},
+    { path: 'Customers/Update', component: CustomersUpdateComponent},
     { path: 'Customers/Read', component: CustomersReadComponent},
+    { path: 'Reports', component: MainComponent},
  //   { path: 'Employees/Create', component: EmployeesCreateComponent},
  //   { path: 'Employees/Delete', component: EmployeesDeleteComponent},
  //   { path: 'Employees/Update', component: EmployeesUpdateComponent},
@@ -70,6 +72,7 @@ export const routes: Routes = [
  //   { path: 'Payments/Delete', component: PaymentsDeleteComponent},
  //   { path: 'Payments/Update', component: PaymentsUpdateComponent},
  //   { path: 'Payments/Read', component: PaymentsReadComponent},
+ { path: '**', redirectTo: ''},
     
 ];
 

@@ -17,6 +17,6 @@ do
     do
         #generate the component file
         echo "Generating $operation component for $table"
-        ng generate component $table-$operation
+        ng generate component $table-$operation --standalone
     done
 done

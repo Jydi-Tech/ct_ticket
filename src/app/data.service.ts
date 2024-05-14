@@ -11,13 +11,16 @@ import { environment } from '../environments/environment';
 })
 export class DataService {
 
-  //this might be wrong
   private apiRoot: string = environment.apiUrl;
   
-
   constructor(private http: HttpClient) {  }  
 
-  //C in crud endpoint is the folder name item data is the data to be passed in
+/**
+ * 
+ * @param endpoint this should be the name of the table but in lowercase and is the folder that actually contains the endpoints your looking for
+ * @param itemData this is the information that will be sent to the api
+ * @returns whatever the api returns else it returns an error
+ */
   createItem(endpoint: string, itemData: any): Observable<any> {
     return this.http.post(`${this.apiRoot}/${endpoint}/create.php`, itemData).pipe(
       catchError(error=>{
@@ -27,6 +30,11 @@ export class DataService {
     );
   }
 
+  /**
+   * 
+   * @param endpoint this should be the name of the table but in lowercase and is the folder that actually contains the endpoints your looking for
+   * @returns items from the table else it returns an error
+   */
   getItem(endpoint: string): Observable<any> {
     return this.http.get(`${this.apiRoot}/${endpoint}/read.php`).pipe(
       catchError(error=>{
@@ -36,6 +44,13 @@ export class DataService {
     );
   }
 
+  /**
+   * 
+   * @param endpoint this should be the name of the table but in lowercase and is the folder that actually contains the endpoints your looking for
+   * @param itemId the sql id of the item
+   * @param itemData this is the updated information that will be sent to the api
+   * @returns returns the updated item from the table else it returns an error
+   */
   updateItem(endpoint: string, itemId: number, itemData: any): Observable<any> {
     return this.http.put(`${this.apiRoot}/${endpoint}/update.php`, { id: itemId, ...itemData }).pipe(
       catchError(error=>{
@@ -45,6 +60,12 @@ export class DataService {
     );
   }
 
+  /**
+   * 
+   * @param endpoint this should be the name of the table but in lowercase and is the folder that actually contains the endpoints your looking for
+   * @param itemId the sql id of the item
+   * @returns returns the deleted item from the table else it returns an error
+   */
   deleteItem(endpoint: string, itemId: number): Observable<any> {
     return this.http.delete(`${this.apiRoot}/${endpoint}/delete.php?id=${itemId}`).pipe(
       catchError(error=>{

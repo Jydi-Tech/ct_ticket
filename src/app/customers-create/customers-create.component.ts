@@ -17,15 +17,19 @@ export class CustomersCreateComponent {
   constructor(private dataService: DataService) { }
 
 
-  addCustomer(username: string, password: string, email: string) {
-    const newUser = {
-      username: username.trim(),
-      password: password.trim(), // In a real app, you'd hash this before sending
+  addCustomer(firstName: string, lastName: string, email: string, phone: string, address: string, city: string, state: string, zip: string, refferalsource: string) {
+    const newCustomer = {
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
       email: email.trim(),
-      role: 'client',
+      phone: phone.trim(),
+      address: address.trim(),
+      city: city.trim(),
+      state: state.trim(),
+      zip: zip.trim(),
+      refferalsource: refferalsource.trim()
     };
-
-    this.dataService.createItem("users", newUser).subscribe({
+    this.dataService.createItem("customers", newCustomer).subscribe({
       next: response => console.log('customer user added!', response),
       error: error => console.error('Error adding user', error),
       complete: () => console.log('Request complete') 

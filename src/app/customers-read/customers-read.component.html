@@ -3,3 +3,34 @@
     <input type="text" #searchTerm placeholder="Search Customers" (input)="0">
     <button (click)="searchCustomers(searchTerm.value)">Search</button>
 </div>
+<!-- display customers -->
+<div class="displayCustomers">
+    <div *ngFor="let customer of customers">
+        <div class="customer">
+            <div class="customer-info">
+                <div class="ID#">
+                    <p>ID#: {{customer.id}}</p>
+                </div>
+                <div class="customer-name">
+                    <h3>{{customer.FirstName}} {{customer.LastName}}</h3>
+                </div>
+                <div class="customer-address">
+                    <p>{{customer.address}}</p>
+                    <p>{{customer.city}}, {{customer.state}} {{customer.zip}}</p>
+                </div>
+                <div class="customer-contact">
+                    <p>{{customer.phone}}</p>
+                    <p>{{customer.email}}</p>
+                </div>
+                <div class="customer-refferal">
+                    <p>{{customer.refferalsource}}</p>
+                </div>
+            </div>
+            <div class="customer-actions">
+                <button (click)="editCustomer(customer.id)">Edit</button>
+                <button (click)="deleteCustomer(customer.id)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
