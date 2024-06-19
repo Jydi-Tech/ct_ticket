@@ -1,3 +1,129 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --border-color: #dddddd;
+  --header-bg-color: #f2f2f2;
+  --hover-bg-color: #f1f1f1;
+  --alt-row-bg-color: #f9f9f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --border-color: #444444;
+    --header-bg-color: #1e1e1e;
+    --hover-bg-color: #333333;
+    --alt-row-bg-color: #797979;
+  }
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Search bar styling */
+.search {
+  margin-bottom: 2rem;
+}
+
+.search input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.search button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: var(--header-bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.search button:hover {
+  background-color: var(--hover-bg-color);
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  border: 1px solid var(--border-color); /* Outside border */    
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  text-align: left;
+  padding: 0.2rem;
+}
+
+th {
+  background-color: var(--header-bg-color);
+  cursor: pointer;
+  position: relative;
+  min-width: 5vw; /* Responsive width */
+  padding-right: 1.4rem; /* Add extra padding for the sorting arrow */
+}
+
+th:nth-child(1), td:nth-child(1) {
+  min-width: 12vw; /* Adjust this value as needed */
+  max-width: 12vw; /* Adjust this value as needed */
+}
+
+th .sort-asc::after,
+th .sort-desc::after {
+  content: '';
+  margin-left: 0.8rem; /* Space between text and arrow */
+}
+
+th .sort-asc::after {
+  content: '▲';
+  position: absolute;
+  right: 0.8rem;
+}
+
+th .sort-desc::after {
+  content: '▼';
+  position: absolute;
+  right: 0.8rem;
+}
+
+th input[type="text"] {
+  width: calc(100%); /* Adjust input width to accommodate padding */
+  padding: .2rem; /* Make input boxes thicker */
+  box-sizing: fill; /* Ensure padding is included in the element's total width and height */
+}
+
+
+/* Tooltip styling for input fields */
+th input[type="text"]::placeholder {
+  opacity: 0; /* Hide the placeholder text */
+}
+
+th input[type="text"]:hover::placeholder {
+  opacity: 1; /* Show the placeholder text on hover */
+}
+
+tr:nth-child(even) {
+  background-color: var(--alt-row-bg-color);
+  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
+}
+
+tr:hover {
+  background-color: var(--hover-bg-color);
+}
+
+/* Center the actions header */
+th.actions-header {
+  text-align: center;
+}
+
 .headerButton {
   font-size: x-large;
   display: block;
@@ -36,10 +162,10 @@
   margin-top: 1%;
 }
 
-
+/* Responsive styling for mobile devices 
 @media only screen and (max-width: 600px),
-only screen and (max-width: 1000px) {
-
+only screen and (max-width: 1000px) {*/
+  @media (max-width: 768px) {
 
   #buttonsDiv {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
@@ -58,4 +184,105 @@ only screen and (max-width: 1000px) {
   .spaceAfterButtons {
     margin-top: 1%;
   }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  tr {
+    margin-bottom: 1rem;
+  }
+
+  th {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  .search-by{
+    text-align: right;
+  }
+
+  /* Specific width for the ID column */
+  th:nth-child(1), td:nth-child(1) {
+    min-width: 1vw; /* Adjust this value as needed */
+    max-width: 1vw; /* Adjust this value as needed */
+  }
+
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  td:before {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    width: 45%;
+    padding-right: 1rem;
+    white-space: nowrap;
+    transform: translateY(-50%);
+    font-weight: bold;
+  }
+
+  td:nth-of-type(1):before { content: "ID#"; }
+  td:nth-of-type(2):before { content: "First Name"; }
+  td:nth-of-type(3):before { content: "Last Name"; }
+  td:nth-of-type(4):before { content: "Address"; }
+  td:nth-of-type(5):before { content: "City"; }
+  td:nth-of-type(6):before { content: "State"; }
+  td:nth-of-type(7):before { content: "Zip Code"; }
+  td:nth-of-type(8):before { content: "Phone Number"; }
+  td:nth-of-type(9):before { content: "Email"; }
+  td:nth-of-type(10):before { content: "Referral Source"; }
+  td:nth-of-type(11):before { content: "Actions"; }
+
+  .customer-actions button {
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Action buttons styling */
+.customer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.action-button {
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  background-color: var(--header-bg-color);
+  text-align: center;
+  flex: 1;
+}
+
+.action-button:hover {
+  background-color: var(--hover-bg-color);
+}
+
+.edit-button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: .2rem;
+
+  margin: .2rem;    
+}
+
+.delete-button {
+  background-color: #f44336; /* Red */
+  color: white;
+  padding: .2rem;
+  margin: .4rem;        
 }

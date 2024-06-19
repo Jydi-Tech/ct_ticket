@@ -5,7 +5,7 @@ import { InvoicesComponent } from './invoices/invoices.component';
 import { CustomersComponent } from './customers/customers.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { CustomersCreateComponent } from './customers-create/customers-create.component';
-import { CustomersDeleteComponent } from './customers-delete/customers-delete.component';
+//import { CustomersDeleteComponent } from './customers-delete/customers-delete.component';
 import { CustomersUpdateComponent } from './customers-update/customers-update.component';
 import { CustomersReadComponent } from './customers-read/customers-read.component';
 import { ReportsComponent } from './reports/reports.component';
@@ -44,7 +44,7 @@ export const routes: Routes = [
     { path: 'Customers', component: CustomersComponent},
     { path: 'Employees', component: EmployeesComponent},
     { path: 'Customers/Create', component: CustomersCreateComponent},
-    { path: 'Customers/Delete', component: CustomersDeleteComponent},
+//    { path: 'Customers/Delete', component: CustomersDeleteComponent},
     { path: 'Customers/Update', component: CustomersUpdateComponent},
     { path: 'Customers/Read', component: CustomersReadComponent},
     { path: 'Reports', component: MainComponent},

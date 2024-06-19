@@ -1,36 +1,54 @@
-<!-- search customers -->
-<div class="search">
-    <input type="text" #searchTerm placeholder="Search Customers" (input)="0">
-    <button (click)="searchCustomers(searchTerm.value)">Search</button>
-</div>
-<!-- display customers -->
+<!-- display customers in a table -->
 <div class="displayCustomers">
-    <div *ngFor="let customer of customers">
-        <div class="customer">
-            <div class="customer-info">
-                <div class="ID#">
-                    <p>ID#: {{customer.id}}</p>
-                </div>
-                <div class="customer-name">
-                    <h3>{{customer.FirstName}} {{customer.LastName}}</h3>
-                </div>
-                <div class="customer-address">
-                    <p>{{customer.address}}</p>
-                    <p>{{customer.city}}, {{customer.state}} {{customer.zip}}</p>
-                </div>
-                <div class="customer-contact">
-                    <p>{{customer.phone}}</p>
-                    <p>{{customer.email}}</p>
-                </div>
-                <div class="customer-refferal">
-                    <p>{{customer.refferalsource}}</p>
-                </div>
-            </div>
-            <div class="customer-actions">
-                <button (click)="editCustomer(customer.id)">Edit</button>
-                <button (click)="deleteCustomer(customer.id)">Delete</button>
-            </div>
-        </div>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th (click)="sortTable('CustomerID')">ID# <span [ngClass]="getSortIcon('CustomerID')"></span></th>
+                <th (click)="sortTable('FirstName')">First Name <span [ngClass]="getSortIcon('FirstName')"></span></th>
+                <th (click)="sortTable('LastName')">Last Name <span [ngClass]="getSortIcon('LastName')"></span></th>
+                <th (click)="sortTable('Address')">Address <span [ngClass]="getSortIcon('Address')"></span></th>
+                <th (click)="sortTable('City')">City <span [ngClass]="getSortIcon('City')"></span></th>
+                <th (click)="sortTable('State')">State <span [ngClass]="getSortIcon('State')"></span></th>
+                <th (click)="sortTable('ZipCode')">Zip Code <span [ngClass]="getSortIcon('ZipCode')"></span></th>
+                <th (click)="sortTable('PhoneNumber')">Phone Number <span [ngClass]="getSortIcon('PhoneNumber')"></span></th>
+                <th (click)="sortTable('Email')">Email <span [ngClass]="getSortIcon('Email')"></span></th>
+                <th (click)="sortTable('ReferralSource')">Referral Source <span [ngClass]="getSortIcon('ReferralSource')"></span></th>
+                <th class="actions-header">Actions</th>
+            </tr>
+            <tr>
+                <th><input type="text" (input)="searchTable($event, 'CustomerID')" title="Search by ID#"></th>
+                <th><input type="text" (input)="searchTable($event, 'FirstName')" title="Search by First Name"></th>
+                <th><input type="text" (input)="searchTable($event, 'LastName')" title="Search by Last Name"></th>
+                <th><input type="text" (input)="searchTable($event, 'Address')" title="Search byn Address"></th>
+                <th><input type="text" (input)="searchTable($event, 'City')" title="Search by City"></th>
+                <th><input type="text" (input)="searchTable($event, 'State')" title="Search by State"></th>
+                <th><input type="text" (input)="searchTable($event, 'ZipCode')" title="Search by Zip Code"></th>
+                <th><input type="text" (input)="searchTable($event, 'PhoneNumber')" title="Search by Phone Number"></th>
+                <th><input type="text" (input)="searchTable($event, 'Email')" title="Search by Email"></th>
+                <th><input type="text" (input)="searchTable($event, 'ReferralSource')" title="Search b Referral Source"></th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr *ngFor="let customer of filteredCustomers">
+                <td>{{customer.CustomerID}}</td>
+                <td>{{customer.FirstName}}</td>
+                <td>{{customer.LastName}}</td>
+                <td>{{customer.Address}}</td>
+                <td>{{customer.City}}</td>
+                <td>{{customer.State}}</td>
+                <td>{{customer.ZipCode}}</td>
+                <td>{{customer.PhoneNumber}}</td>
+                <td>{{customer.Email}}</td>
+                <td>{{customer.ReferralSource}}</td>
+                <td class="customer-actions">
+                    <div class="action-buttons">
+                        <div class="action-button edit-button" (click)="editCustomer(customer.CustomerID)">Edit</div>
+                        <div class="action-button delete-button" (click)="deleteCustomer(customer.CustomerID)">Delete</div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-

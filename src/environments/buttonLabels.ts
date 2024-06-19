@@ -13,12 +13,7 @@ export const BUTTON_LABELS : string[] = new Array(
     "Employees",
     "Reports",
     );
-export const CUSTOMER_BUTTON_LABELS : string[] = new Array(
-    "Add Customer", 
-    "Delete Selected", 
-    "Edit Customer",
-    "Search Customers",
-);
+
 
 export const BUTTONLABLESTOTAL : number = BUTTON_LABELS.length;
 export const HEADER_BUTTON_CELL_WIDTH_VAR : string = ((100/BUTTONLABLESTOTAL)-0.8).toString() + "%";

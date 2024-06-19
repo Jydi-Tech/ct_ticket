@@ -17,17 +17,16 @@ export class CustomersCreateComponent {
   constructor(private dataService: DataService) { }
 
 
-  addCustomer(firstName: string, lastName: string, email: string, phone: string, address: string, city: string, state: string, zip: string, refferalsource: string) {
-    const newCustomer = {
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      address: address.trim(),
-      city: city.trim(),
-      state: state.trim(),
-      zip: zip.trim(),
-      refferalsource: refferalsource.trim()
+  addCustomer(firstName: string, lastName: string, email: string, phoneNumber: string, address: string, city: string, state: string, zipCode: string, referralSource: string) {    const newCustomer = {
+      FirstName: firstName.trim(),
+      LastName: lastName.trim(),
+      Email: email.trim(),
+      PhoneNumber: phoneNumber.trim(),
+      Address: address.trim(),
+      City: city.trim(),
+      State: state.trim(),
+      ZipCode: zipCode.trim(),
+      ReferralSource: referralSource.trim()
     };
     this.dataService.createItem("customers", newCustomer).subscribe({
       next: response => console.log('customer user added!', response),

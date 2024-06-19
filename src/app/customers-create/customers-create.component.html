@@ -1,43 +1,43 @@
 <div class="customers">
-    <input type="text" #FirstName placeholder="FirstName" required>
-    <input type="text" #LastName placeholder="LastName" required>
-    <input type="tel" #Phone placeholder="Phone" required>
+    <input type="text" #FirstName placeholder="First Name" required>
+    <input type="text" #LastName placeholder="Last Name" required>
+    <input type="tel" #PhoneNumber placeholder="Phone Number" required>
     <input type="text" #Address placeholder="Address" required>
     <input type="text" #City placeholder="City" required>
     <input type="text" #State placeholder="State" required>
-    <input type="number" #Zip placeholder="Zip" required>
+    <input type="number" #ZipCode placeholder="Zip Code" required>
     <input type="email" #Email placeholder="Email" required>
-    <input type="text" #RefferalSource name="Refferal Source" list="refferal" required>
-    <datalist id="refferal">
+    <input type="text" #ReferralSource placeholder="Referral Source" list="referral" required>
+    <datalist id="referral">
         <option value="Website">
-        <option value="Radio Add">
+        <option value="Radio Ad">
         <option value="Friend or Family">
-        <option value="Another Buissness">
+        <option value="Another Business">
         <option value="Returning Customer">
-        <option value="other">
+        <option value="Other">
     </datalist>
-    <!-- (click) passes input value to addAdminUser() and then clears the input -->
+    <!-- (click) passes input value to addCustomer() and then clears the input -->
     <button (click)="
     addCustomer(
         FirstName.value, 
         LastName.value, 
-        Phone.value, 
+        Email.value, 
+        PhoneNumber.value, 
         Address.value, 
         City.value, 
         State.value, 
-        Zip.value, 
-        Email.value, 
-        RefferalSource.value
+        ZipCode.value, 
+        ReferralSource.value
     ); 
     FirstName.value=''; 
     LastName.value=''; 
-    Phone.value=''; 
+    Email.value=''; 
+    PhoneNumber.value=''; 
     Address.value=''; 
     City.value=''; 
     State.value=''; 
-    Zip.value=''; 
-    Email.value=''; 
-    RefferalSource.value='';
+    ZipCode.value=''; 
+    ReferralSource.value='';
     ">
         Add Customer
     </button>
