@@ -41,7 +41,9 @@ export class CustomersReadComponent implements OnInit{
   }
 
   deleteCustomer(arg0: any) {
-    console.log('delete customer button clicked');
+    console.log('did we get in?');
+    console.log('arg0 is :', arg0);
+    console.log('delete customer button ');
     this.dataService.deleteItem("customers", arg0).subscribe({
       next: response => {
         console.log('Customer deleted!', response);

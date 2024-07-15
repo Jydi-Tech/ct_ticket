@@ -1,64 +1,93 @@
 <div id="buttonsDiv">
-    <div  class="buttonCell"
-          style="cursor: pointer;"
-          *ngFor="let buttonLabel of buttonLabels;"
-          (click)="onButtonClick(buttonLabel)">
-      <a id="linkText" 
-          class="linkText" >
-        {{buttonLabel}}</a>
+    <div class="buttonCell" style="cursor: pointer;" *ngFor="let buttonLabel of buttonLabels;" (click)="onButtonClick(buttonLabel)">
+      <a id="linkText" class="linkText">{{buttonLabel}}</a>
     </div>
-</div> 
-<ng-container *ngComponentOutlet="dynamicComponent;"/>
-<!-- display customers in a table -->
-<div class="displayCustomers">
-    <table>
-        <thead>
-            <tr>
-                <th class="Search-by">Search by:</th>
-                <th><input type="text" (input)="searchTable($event, 'CustomerID')" placeholder = "ID#" title="Search by ID#"></th>
-                <th><input type="text" (input)="searchTable($event, 'FirstName')" placeholder = "First" title="Search by First Name"></th>
-                <th><input type="text" (input)="searchTable($event, 'LastName')" placeholder = "Last" title="Search by Last Name"></th>
-                <th><input type="text" (input)="searchTable($event, 'Address')" placeholder = "Address" title="Search byn Address"></th>
-                <th><input type="text" (input)="searchTable($event, 'City')" placeholder = "City" title="Search by City"></th>
-                <th><input type="text" (input)="searchTable($event, 'State')" placeholder = "State" title="Search by State"></th>
-                <th><input type="text" (input)="searchTable($event, 'ZipCode')" placeholder = "Zip" title="Search by Zip Code"></th>
-                <th><input type="text" (input)="searchTable($event, 'PhoneNumber')" placeholder = "Phone #" title="Search by Phone Number"></th>
-                <th><input type="text" (input)="searchTable($event, 'Email')" placeholder = "Seach by Email" title="Search by Email"></th>
-                <th><input type="text" (input)="searchTable($event, 'ReferralSource')" placeholder = "Source" title="Search b Referral Source"></th>
-            </tr>
-            <tr>                
-                <th class="actions-header">Actions</th>
-                <th (click)="sortTable('CustomerID')">ID# <span [ngClass]="getSortIcon('CustomerID')"></span></th>
-                <th (click)="sortTable('FirstName')">First <span [ngClass]="getSortIcon('FirstName')"></span></th>
-                <th (click)="sortTable('LastName')">Last <span [ngClass]="getSortIcon('LastName')"></span></th>
-                <th (click)="sortTable('Address')">Address <span [ngClass]="getSortIcon('Address')"></span></th>
-                <th (click)="sortTable('City')">City <span [ngClass]="getSortIcon('City')"></span></th>
-                <th (click)="sortTable('State')">State <span [ngClass]="getSortIcon('State')"></span></th>
-                <th (click)="sortTable('ZipCode')">Zip Code <span [ngClass]="getSortIcon('ZipCode')"></span></th>
-                <th (click)="sortTable('PhoneNumber')">Phone # <span [ngClass]="getSortIcon('PhoneNumber')"></span></th>
-                <th (click)="sortTable('Email')">Email <span [ngClass]="getSortIcon('Email')"></span></th>
-                <th (click)="sortTable('ReferralSource')">Referral Source <span [ngClass]="getSortIcon('ReferralSource')"></span></th>
-            </tr>
+  </div>
+  <ng-container *ngComponentOutlet="dynamicComponent;"></ng-container>
+  
+  <div class="displayCustomers">
+    <table [formGroup]="editForm">
+      <thead>
+        <tr>
+          <th class="Search-by">Search by:</th>
+          <th><input type="text" (input)="searchTable($event, 'CustomerID')" placeholder="ID#" title="Search by ID#"></th>
+          <th><input type="text" (input)="searchTable($event, 'FirstName')" placeholder="First" title="Search by First Name"></th>
+          <th><input type="text" (input)="searchTable($event, 'LastName')" placeholder="Last" title="Search by Last Name"></th>
+          <th><input type="text" (input)="searchTable($event, 'Address')" placeholder="Address" title="Search by Address"></th>
+          <th><input type="text" (input)="searchTable($event, 'City')" placeholder="City" title="Search by City"></th>
+          <th><input type="text" (input)="searchTable($event, 'State')" placeholder="State" title="Search by State"></th>
+          <th><input type="text" (input)="searchTable($event, 'ZipCode')" placeholder="Zip" title="Search by Zip Code"></th>
+          <th><input type="text" (input)="searchTable($event, 'PhoneNumber')" placeholder="Phone #" title="Search by Phone Number"></th>
+          <th><input type="text" (input)="searchTable($event, 'Email')" placeholder="Search by Email" title="Search by Email"></th>
+          <th><input type="text" (input)="searchTable($event, 'ReferralSource')" placeholder="Source" title="Search by Referral Source"></th>
+        </tr>
+        <tr>
+          <th class="actions-header">Actions</th>
+          <th (click)="sortTable('CustomerID')">ID# <span [ngClass]="getSortIcon('CustomerID')"></span></th>
+          <th (click)="sortTable('FirstName')">First <span [ngClass]="getSortIcon('FirstName')"></span></th>
+          <th (click)="sortTable('LastName')">Last <span [ngClass]="getSortIcon('LastName')"></span></th>
+          <th (click)="sortTable('Address')">Address <span [ngClass]="getSortIcon('Address')"></span></th>
+          <th (click)="sortTable('City')">City <span [ngClass]="getSortIcon('City')"></span></th>
+          <th (click)="sortTable('State')">State <span [ngClass]="getSortIcon('State')"></span></th>
+          <th (click)="sortTable('ZipCode')">Zip Code <span [ngClass]="getSortIcon('ZipCode')"></span></th>
+          <th (click)="sortTable('PhoneNumber')">Phone # <span [ngClass]="getSortIcon('PhoneNumber')"></span></th>
+          <th (click)="sortTable('Email')">Email <span [ngClass]="getSortIcon('Email')"></span></th>
+          <th (click)="sortTable('ReferralSource')">Referral Source <span [ngClass]="getSortIcon('ReferralSource')"></span></th>
+        </tr>
+      </thead>
 
-        </thead>
-        
-        <tbody>
-            <tr *ngFor="let customer of filteredCustomers">
-                <td class="customer-actions">
-                    <div class="action-button edit-button" (click)="editCustomer(customer.CustomerID)">Edit</div>
-                    <div class="action-button delete-button" (click)="deleteCustomer(customer.CustomerID)">Delete</div>
-                </td>
-                <td>{{customer.CustomerID}}</td>
-                <td>{{customer.FirstName}}</td>
-                <td>{{customer.LastName}}</td>
-                <td>{{customer.Address}}</td>
-                <td>{{customer.City}}</td>
-                <td>{{customer.State}}</td>
-                <td>{{customer.ZipCode}}</td>
-                <td>{{customer.PhoneNumber}}</td>
-                <td>{{customer.Email}}</td>
-                <td>{{customer.ReferralSource}}</td>
-            </tr>
-        </tbody>
+      <tbody>
+        <tr *ngFor="let customer of filteredCustomers">
+          <td class="customer-actions">
+            <div class="action-buttons" *ngIf="editingCustomerId === customer.CustomerID">
+              <div class="action-button apply-button" (click)="applyCustomer()">Apply</div>
+              <div class="action-button cancel-button" (click)="cancelCustomer()">Cancel</div>
+            </div>
+            <div class="action-buttons" *ngIf="editingCustomerId !== customer.CustomerID">
+              <div class="action-button edit-button" (click)="editCustomer(customer.CustomerID)">Edit</div>
+              <div class="action-button delete-button" (click)="deleteCustomer(customer.CustomerID)">Delete</div>
+            </div>
+          </td>
+          <td>{{customer.CustomerID}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.FirstName}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.LastName}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.Address}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.City}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.State}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.ZipCode}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.PhoneNumber}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.Email}}</td>
+          <td *ngIf="editingCustomerId !== customer.CustomerID">{{customer.ReferralSource}}</td>
+      
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="FirstName">
+          </td>
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="LastName">
+          </td>
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="Address">
+          </td>
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="City">
+          </td>
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="State">
+          </td>
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="ZipCode">
+          </td>
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="PhoneNumber">
+          </td>
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="Email">
+          </td>
+          <td *ngIf="editingCustomerId === customer.CustomerID">
+            <input formControlName="ReferralSource">
+          </td>
+        </tr>
+      </tbody>
     </table>
-</div>
+  </div>
+  

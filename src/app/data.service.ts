@@ -67,11 +67,20 @@ export class DataService {
    * @returns returns the deleted item from the table else it returns an error
    */
   deleteItem(endpoint: string, itemId: number): Observable<any> {
-    return this.http.delete(`${this.apiRoot}/${endpoint}/delete.php?id=${itemId}`).pipe(
-      catchError(error=>{
-        console.error('An error occured in createItem:', error);
+    const url = `${this.apiRoot}/${endpoint}/delete.php`;
+    const options = {
+      headers: { 'Constent-Type': 'application/json' },
+      body: { CustomerID: itemId }
+    };
+    console.log('DELETE request URL:', url);
+    console.log('DELETE request options:', options);
+
+    return this.http.delete(url, options).pipe(
+      catchError(error => {
+        console.error('An error occurred in deleteItem:', error);
         return throwError(() => error);
       })
     );
-  }
+}
+
 }

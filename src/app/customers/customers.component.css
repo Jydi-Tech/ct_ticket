@@ -23,7 +23,6 @@ body {
   color: var(--text-color);
 }
 
-/* Search bar styling */
 .search {
   margin-bottom: 2rem;
 }
@@ -49,37 +48,36 @@ body {
   background-color: var(--hover-bg-color);
 }
 
-/* Table styling */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 2rem;
-  border: 1px solid var(--border-color); /* Outside border */    
+  border: 1px solid var(--border-color);
 }
 
 th, td {
   border: 1px solid var(--border-color);
   text-align: left;
-  padding: 0.2rem;
+  padding: 0.5rem;
 }
 
 th {
   background-color: var(--header-bg-color);
   cursor: pointer;
   position: relative;
-  min-width: 5vw; /* Responsive width */
-  padding-right: 1.4rem; /* Add extra padding for the sorting arrow */
+  min-width: 5vw;
+  padding-right: 1.4rem;
 }
 
 th:nth-child(1), td:nth-child(1) {
-  min-width: 12vw; /* Adjust this value as needed */
-  max-width: 12vw; /* Adjust this value as needed */
+  min-width: 12vw;
+  max-width: 12vw;
 }
 
 th .sort-asc::after,
 th .sort-desc::after {
   content: '';
-  margin-left: 0.8rem; /* Space between text and arrow */
+  margin-left: 0.8rem;
 }
 
 th .sort-asc::after {
@@ -95,19 +93,17 @@ th .sort-desc::after {
 }
 
 th input[type="text"] {
-  width: calc(100%); /* Adjust input width to accommodate padding */
-  padding: .2rem; /* Make input boxes thicker */
-  box-sizing: fill; /* Ensure padding is included in the element's total width and height */
+  width: calc(100% - 1rem);
+  padding: 0.5rem;
+  box-sizing: border-box;
 }
 
-
-/* Tooltip styling for input fields */
 th input[type="text"]::placeholder {
-  opacity: 0; /* Hide the placeholder text */
+  opacity: 0;
 }
 
 th input[type="text"]:hover::placeholder {
-  opacity: 1; /* Show the placeholder text on hover */
+  opacity: 1;
 }
 
 tr:nth-child(even) {
@@ -119,54 +115,70 @@ tr:hover {
   background-color: var(--hover-bg-color);
 }
 
-/* Center the actions header */
 th.actions-header {
   text-align: center;
 }
 
-.headerButton {
-  font-size: x-large;
-  display: block;
-  background-color: rgb(132, 98, 187);
-  width: 100%;
-  height: 100%;
-  border: none;
+  /* Action buttons styling */
+  .customer-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-top: .5rem;
+  }
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
 }
 
-#buttonsDiv {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(100px, 250px));
-  grid-gap: 0.5%;
-}
-
-.buttonCell {
-  padding: .5%;
-  background-color: rgb(132, 98, 187);
+.action-button {
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  background-color: var(--header-bg-color);
   text-align: center;
-  display: block;
 }
 
-#linkText {
+
+
+.action-button:hover {
+  background-color: var(--hover-bg-color);
+}
+
+.edit-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.apply-button {
+  background-color: #008CBA;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #cccccc;
   color: black;
-  text-decoration: none;
-  background-color: rgb(132, 98, 187);
-  font-weight: bolder;
-  font-size: 1.9vw;
-  font-family: 'Times New Roman', Times, serif;
-  display: block;
+}
+
+td input {
   width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  box-sizing: border-box;
 }
 
-.spaceAfterButtons {
-  display: block;
-  margin-top: 1%;
-}
-
-/* Responsive styling for mobile devices 
-@media only screen and (max-width: 600px),
-only screen and (max-width: 1000px) {*/
-  @media (max-width: 768px) {
-
+@media (max-width: 768px) {
   #buttonsDiv {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
     border-top: 2px solid rgb(10, 8, 15);
@@ -204,15 +216,6 @@ only screen and (max-width: 1000px) {*/
     top: -9999px;
     left: -9999px;
   }
-  .search-by{
-    text-align: right;
-  }
-
-  /* Specific width for the ID column */
-  th:nth-child(1), td:nth-child(1) {
-    min-width: 1vw; /* Adjust this value as needed */
-    max-width: 1vw; /* Adjust this value as needed */
-  }
 
   td {
     border: none;
@@ -248,41 +251,4 @@ only screen and (max-width: 1000px) {*/
     display: inline-block;
     margin-top: 0.5rem;
   }
-}
-
-/* Action buttons styling */
-.customer-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
-}
-
-.action-button {
-  padding: 0.6rem 1.2rem;
-  cursor: pointer;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  background-color: var(--header-bg-color);
-  text-align: center;
-  flex: 1;
-}
-
-.action-button:hover {
-  background-color: var(--hover-bg-color);
-}
-
-.edit-button {
-  background-color: #4CAF50; /* Green */
-  color: white;
-  padding: .2rem;
-
-  margin: .2rem;    
-}
-
-.delete-button {
-  background-color: #f44336; /* Red */
-  color: white;
-  padding: .2rem;
-  margin: .4rem;        
 }

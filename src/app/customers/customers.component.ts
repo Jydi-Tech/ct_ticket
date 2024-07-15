@@ -1,49 +1,58 @@
 import { CommonModule } from '@angular/common';
-import { Component, Injector, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { CustomersUpdateComponent } from '../customers-update/customers-update.component';
 import { DataService } from '../data.service';
 import { CustomersCreateComponent } from '../customers-create/customers-create.component';
 import { CUSTOMER_BUTTON_LABELS } from './customers.ButtonLabels';
-
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-customers',
-    standalone: true,
-    providers: [DataService],
-    imports: [RouterModule, CommonModule, HttpClientModule],
-    templateUrl: './customers.component.html',
-    styleUrls: ['./customers.component.css'],
+  selector: 'app-customers',
+  standalone: true,
+  providers: [DataService],
+  imports: [RouterModule, CommonModule, HttpClientModule, ReactiveFormsModule],
+  templateUrl: './customers.component.html',
+  styleUrls: ['./customers.component.css'],
 })
-export class CustomersComponent implements OnInit{
+export class CustomersComponent implements OnInit {
   public dynamicComponent: any;
-  public buttonLabels : string[] = CUSTOMER_BUTTON_LABELS;
+  public buttonLabels: string[] = CUSTOMER_BUTTON_LABELS;
   customers: any[] = [];
   filteredCustomers: any[] = [];
+  editingCustomerId: number | null = null;
   currentSortColumn: string = '';
   currentSortDirection: string = '';
   searchTerms: { [key: string]: string } = {};
+  editForm: FormGroup;
 
-  constructor(private dataService: DataService) {  }
+  constructor(private dataService: DataService, private fb: FormBuilder) {
+    this.editForm = this.fb.group({
+      CustomerID: [''],
+      FirstName: [''],
+      LastName: [''],
+      Address: [''],
+      City: [''],
+      State: [''],
+      ZipCode: [''],
+      PhoneNumber: [''],
+      Email: [''],
+      ReferralSource: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.fetchCustomers();
   }
 
-  onButtonClick(buttonLabel: string){
-
-    switch(buttonLabel){
+  onButtonClick(buttonLabel: string) {
+    switch (buttonLabel) {
       case '+ New Customer':
-        if (this.dynamicComponent == null){
-          this.dynamicComponent = CustomersCreateComponent;
-        } else {
-          this.dynamicComponent = null;
-        }
+        this.dynamicComponent = this.dynamicComponent == null ? CustomersCreateComponent : null;
         console.log('CustomerCreate button clicked');
         break;
       case 'Clear Search Data':
-        
+        // Clear search functionality
         break;
       case 'Delete Selected':
         console.log('Delete Selected button clicked');
@@ -52,8 +61,7 @@ export class CustomersComponent implements OnInit{
         console.log('No component found for button label: ' + buttonLabel);
         break;
     }
-  }  
-
+  } 
   fetchCustomers() {
     console.log('fetch customers accessed');
     this.dataService.getItem("customers").subscribe({
@@ -68,8 +76,7 @@ export class CustomersComponent implements OnInit{
     });
   }
 
-  deleteCustomer(arg0: any) {
-    let customerID : any = arg0;
+  deleteCustomer(customerID: number) {
     console.log('delete customer button clicked');
     this.dataService.deleteItem("customers", customerID).subscribe({
       next: response => {
@@ -77,13 +84,32 @@ export class CustomersComponent implements OnInit{
         this.fetchCustomers(); // Refresh the list after deletion
       },
       error: error => console.error('Error deleting customer', error),
-      complete: () => console.log('Request complete') // Optional if you need to handle completion
+      complete: () => console.log('Request complete')
     });
   }
 
-  editCustomer(arg0: any) {
-    let customerID : any = arg0;
-    
+  editCustomer(customerID: number) {
+    this.editingCustomerId = customerID;
+    const customer = this.customers.find(c => c.CustomerID === customerID);
+    if (customer) {
+      this.editForm.patchValue(customer);
+    }
+  }
+
+  applyCustomer() {
+    const updatedCustomer = this.editForm.value;
+    this.dataService.updateItem("customers", updatedCustomer.CustomerID, updatedCustomer).subscribe({
+      next: response => {
+        this.editingCustomerId = null; // Exit edit mode
+        this.fetchCustomers(); // Refresh the list after update
+      },
+      error: error => console.error('Error updating customer', error),
+      complete: () => console.log('Request complete')
+    });
+  }
+
+  cancelCustomer() {
+    this.editingCustomerId = null;
   }
 
   sortTable(column: string) {
