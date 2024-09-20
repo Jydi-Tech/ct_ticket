@@ -1,12 +1,12 @@
 #!/bin/bash
-
+PASSWORD=$(cat ~/password.txt)
 DEPLOY_DIR="/var/www/html/ct_ticket_dist"
 
 mkdir "$DEPLOY_DIR"
 
 # Change ownership to the current user for copying
-sudo chmod 777 "$DEPLOY_DIR"
-sudo chown -R $USER:$USER "$DEPLOY_DIR"
+echo $PASSWORD | sudo chmod 777 "$DEPLOY_DIR"
+echo $PASSWORD | sudo chown -R $USER:$USER "$DEPLOY_DIR"
 
 # Build and Copy Files
 echo "Building Angular project..."

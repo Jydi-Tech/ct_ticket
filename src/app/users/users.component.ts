@@ -2,28 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { DataService } from '../data.service';
-import { CustomersCreateComponent } from '../customers-create/customers-create.component';
 import { environment } from '../../environments/environment';
-import * as Labels from './customers.labels';
+import * as Labels from './users.label';
+import { UsersCreateComponent } from '../users-create/users-create.component';
 
 
 @Component({
-  selector: 'app-customers',
+  selector: 'app-users',
   standalone: true,
   providers: [DataService],
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.css'],
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
 })
-export class CustomersComponent implements OnInit {
+export class UsersComponent implements OnInit {
   public dynamicComponent: any;
-  public buttonLabels: string[] = Labels.CUSTOMER_BUTTON_LABELS;
-  private Table = Labels.CUSTOMER_TABLE;
-  public Label = Labels.CUSTOMER_LABELS;
+  public buttonLabels: string[] = Labels.USER_BUTTON_LABELS;
+  private Table = Labels.USER_TABLE;
+  public Label = Labels.USER_LABELS;
 
-  public customerFields: string[] = [
+  public userFields: string[] = [
     this.Table.FirstName,
     this.Table.LastName,
+    this.Table.Role,
     this.Table.Address,
     this.Table.Address2,
     this.Table.City,
@@ -31,12 +32,14 @@ export class CustomersComponent implements OnInit {
     this.Table.ZipCode,
     this.Table.PhoneNumber,
     this.Table.Email,
-    this.Table.ReferralSource
+    this.Table.Password
   ];
-  public customerHeaders: string[] = [
-    this.Table.CustomerID,
+
+  public userHeaders: string[] = [
+    this.Table.UserID,
     this.Table.FirstName,
     this.Table.LastName,
+    this.Table.Role,
     this.Table.Address,
     this.Table.Address2,
     this.Table.City,
@@ -44,25 +47,24 @@ export class CustomersComponent implements OnInit {
     this.Table.ZipCode,
     this.Table.PhoneNumber,
     this.Table.Email,
-    this.Table.ReferralSource
+    this.Table.Password
   ];
-  customers: any[] = [];
-  filteredCustomers: any[] = [];
-  editingCustomerId: number | null = null;
+  users: any[] = [];
+  filteredUsers: any[] = [];
+  editingUserId: number | null = null;
   currentSortColumn: string = '';
   currentSortDirection: string = '';
   searchTerms: { [key: string]: string } = {};
   editForm: FormGroup;
   editImage: string = environment.imageUrl + "/edit.png";
   trashImage: string = environment.imageUrl + "/trash.png";
-  errorMessage: string | null = null;
-  errorDetails: any;
 
   constructor(private dataService: DataService, private fb: FormBuilder) {
     this.editForm = this.fb.group({
-      CustomerID: [''],
+      UserID: [''],
       FirstName: [''],
       LastName: [''],
+      Role: [''],
       Address: [''],
       Address2: [''],
       City: [''],
@@ -70,23 +72,22 @@ export class CustomersComponent implements OnInit {
       ZipCode: [''],
       PhoneNumber: [''],
       Email: [''],
-      ReferralSource: ['']
-    });
+      Password: ['']
+    })
   }
   ngOnInit(): void {
-    this.fetchCustomers();
+    this.fetchUsers();
   }
-
   onButtonClick(buttonLabel: string) {
     switch (buttonLabel) {
-      case '+ New Customer':
-        this.dynamicComponent = this.dynamicComponent == null ? CustomersCreateComponent : null;
-        console.log('CustomerCreate button clicked');
+      case '+ New User':
+        this.dynamicComponent = this.dynamicComponent == null ? UsersCreateComponent : null;
+        console.log('UserCreate button clicked');
         break;
       case 'Clear Search Data':
         this.searchTerms = {};
-        this.filteredCustomers = [...this.customers];
-        this.fetchCustomers();
+        this.filteredUsers = [...this.users];
+        this.fetchUsers();
         break;
       default:
         console.log('No function for: ' + buttonLabel);
@@ -94,65 +95,58 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  fetchCustomers() {
-    this.dataService.getItem("customers").subscribe({
+  fetchUsers() {
+    this.dataService.getItem("users").subscribe({
       next: response => {
-        this.customers = response;
-        this.filteredCustomers = response;
-        this.sortTable(this.currentSortColumn); // Apply current sort
-        console.log('Customers retrieved!', this.customers);
+        this.users = response;
+        this.filteredUsers = response;
+        this.sortTable(this.currentSortColumn);  //apply current sort
+        console.log('Users retrieved!', this.users);
       },
-      error: error => console.error('Error retrieving customers', error),
+      error: error => console.error('Error retrieving Users', error),
       complete: () => console.log('Request complete') // Optional if you need to handle completion
-    });
+    })
   }
 
-  deleteCustomer(customerID: number) {
-    if (confirm('Are you sure you want to delete this item?')) {
-      this.dataService.deleteItem("customers", customerID).subscribe({
+  deleteUser(userID: number) {
+    if (confirm('Are you sure you want to delete this item?: ' + userID)) {
+      this.dataService.deleteItem("users", userID).subscribe({
         next: response => {
-          console.log('Customer deleted!', response);
-          this.fetchCustomers(); // Refresh the list after deletion
+          console.log('User deleted!', response);
+          this.fetchUsers(); // Refresh the list after deletion
         },
         error: error => {
-          console.error('Error deleting customer', error);
-          this.errorMessage = error.error.message;
-          this.errorDetails = error.error.usageDetails;
-        },
+          
+          console.error('Error deleting user', error)},
         complete: () => console.log('Request complete')
       });
     } else {
       console.log('not deleted due to selection.');
     }
   }
-
-  clearErrorMessage() {
-    this.errorMessage = null;
-    this.errorDetails = null;
-  }
-
-  editCustomer(customerID: number) {
-    this.editingCustomerId = customerID;
-    const customer = this.customers.find(c => c.CustomerID === customerID);
-    if (customer) {
-      this.editForm.patchValue(customer);
+  
+  editUser(userID: number) {
+    this.editingUserId = userID;
+    const user = this.users.find(c => c.UserID === userID);
+    if (user) {
+      this.editForm.patchValue(user);
     }
   }
 
-  applyCustomer() {
-    const updatedCustomer = this.editForm.value;
-    this.dataService.updateItem("customers", updatedCustomer.CustomerID, updatedCustomer).subscribe({
+  applyUser() {
+    const updatedUser = this.editForm.value;
+    this.dataService.updateItem("users", updatedUser.UserID, updatedUser).subscribe({
       next: response => {
-        this.editingCustomerId = null; // Exit edit mode
-        this.fetchCustomers(); // Refresh the list after update
+        this.editingUserId = null; // Exit edit mode
+        this.fetchUsers(); // Refresh the list after update
       },
-      error: error => console.error('Error updating customer', error),
+      error: error => console.error('Error updating user', error),
       complete: () => console.log('Request complete')
     });
   }
 
-  cancelCustomer() {
-    this.editingCustomerId = null;
+  cancelUser() {
+    this.editingUserId = null;
   }
 
   sortTable(column: string) {
@@ -163,7 +157,7 @@ export class CustomersComponent implements OnInit {
       this.currentSortDirection = 'asc';
     }
 
-    this.filteredCustomers.sort((a, b) => {
+    this.filteredUsers.sort((a, b) => {
       if (a[column] < b[column]) {
         return this.currentSortDirection === 'asc' ? -1 : 1;
       } else if (a[column] > b[column]) {
@@ -183,21 +177,35 @@ export class CustomersComponent implements OnInit {
 
   searchTable(event: any, column: string) {
     this.searchTerms[column] = event.target.value.toLowerCase();
-    this.filteredCustomers = [];
-    for (let customer in this.customers) {
+    this.filteredUsers = [];
+    for (let user in this.users) {
       let match = true;
       for (const key in this.searchTerms) {
         const searchTerm = this.searchTerms[key];
-        const keyValue = this.customers[customer][key];
-        if (!String(keyValue).toLowerCase().includes(searchTerm) || (searchTerm !== '' && key === 'CustomerID' && keyValue !== +searchTerm)) {
+        const keyValue = this.users[user][key];
+        if (!String(keyValue).toLowerCase().includes(searchTerm) || (searchTerm !== '' && key === 'UserID' && keyValue !== +searchTerm)) {
           match = false;
           break;
         }
       }
       if (match) {
-        this.filteredCustomers.push(this.customers[customer]);
+        this.filteredUsers.push(this.users[user]);
       }
     }
   }
+  
+  addUser(username: string, password: string, email: string) {
+    const newUser = {
+      username: username.trim(),
+      password: password.trim(), // In a real app, you'd hash this before sending
+      email: email.trim(),
+      role: 'admin'
+    };
 
+    this.dataService.createItem("users", newUser).subscribe({
+      next: response => console.log('Admin user added!', response),
+      error: error => console.error('Error adding user', error),
+      complete: () => console.log('Request complete') // Optional if you need to handle completion
+    });
+  }
 }

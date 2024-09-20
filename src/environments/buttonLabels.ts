@@ -10,7 +10,7 @@ export const BUTTON_LABELS : string[] = new Array(
     "Tickets",
     "Invoices",
     "Customers",
-    "Employees",
+    "Users",
     "Reports",
     );
 

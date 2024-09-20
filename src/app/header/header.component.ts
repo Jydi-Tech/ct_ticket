@@ -17,6 +17,7 @@ export class HeaderComponent {
   public labelPercent: string = HEADER_BUTTON_CELL_WIDTH_VAR;
   headerImage: string = environment.imageUrl + "/CajunTechLogoWhite.png";
   showCopyNotification: boolean = false;
+  public users : string = "users";
 
   constructor(private router: Router) {
     //this is needed to allow the cajunTech image to go to root as it passes in the router object for goToRootPage
@@ -27,6 +28,7 @@ export class HeaderComponent {
   }
 
   onButtonClick(buttonLabel: string) {
+    console.log(`Button ${buttonLabel} clicked`);
     //this is needed to allow the button to work it passes the string
   }
 

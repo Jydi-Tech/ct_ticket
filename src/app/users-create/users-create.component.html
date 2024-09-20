@@ -1,0 +1,44 @@
+<div class="users-create-container">
+    <h2>New Employee</h2>
+    <form [formGroup]="createForm" (ngSubmit)="addUser()" class="users-form">
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('FirstName')?.invalid && createForm.get('FirstName')?.touched}">
+        <input type="text" formControlName="FirstName" placeholder="First Name" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('LastName')?.invalid && createForm.get('LastName')?.touched}">
+        <input type="text" formControlName="LastName" placeholder="Last Name" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Role')?.invalid && createForm.get('Role')?.touched}">
+        <select formControlName="Role" required>
+          <option value="" disabled>Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="staff">Staff</option>
+        </select>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('PhoneNumber')?.invalid && createForm.get('PhoneNumber')?.touched}">
+        <input type="tel" formControlName="PhoneNumber" placeholder="Phone Number" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Address')?.invalid && createForm.get('Address')?.touched}">
+        <input type="text" formControlName="Address" placeholder="Address" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Address2')?.invalid && createForm.get('Address2')?.touched}">
+        <input type="text" formControlName="Address2" placeholder="Address 2">
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('City')?.invalid && createForm.get('City')?.touched}">
+        <input type="text" formControlName="City" placeholder="City" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('State')?.invalid && createForm.get('State')?.touched}">
+        <input type="text" formControlName="State" placeholder="State" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('ZipCode')?.invalid && createForm.get('ZipCode')?.touched}">
+        <input type="number" formControlName="ZipCode" placeholder="Zip Code" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Email')?.invalid && createForm.get('Email')?.touched}">
+        <input type="email" formControlName="Email" placeholder="Email" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Password')?.invalid && createForm.get('Password')?.touched}">
+        <input type="password" formControlName="Password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="submit-button">Add User</button>
+    </form>
+  </div>
+  

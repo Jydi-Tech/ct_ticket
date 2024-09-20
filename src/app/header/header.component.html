@@ -1,34 +1,27 @@
 <header>
-    <div class="container">
-      <a href="a" routerLink="/" class="Logo"></a>
+  <div class="container">
+    <a href="a" routerLink="/" class="Logo"></a>
+  </div>
+  <div class="headerWrapper">
+    <div class="headerLogoDiv">
+      <img [src]="headerImage" class="headerImage" alt="CajunTech" (click)="goToRootPage()">    </div>
+    <div class="headerContactDiv">
+      <p class="bold_underline">Location:</p><br>
+      <a href="https://maps.app.goo.gl/zYCKUGB552DNLL2DA" target="_blank">
+        913 center st Suite 1B<br>
+        Evanston WY, 82930
+      </a><br>
+      <p class="bold_underline">Phone:</p><br>
+      <span id="phoneNumber" (click)="copyPhoneNumber()">Cell: (307) 679-2101</span><br>
+      <div class="copy-notification" *ngIf="showCopyNotification">Cell Copied!</div>
     </div>
-      <div class="headerWrapper">
-        <div class="headerLogoDiv">
-          <img [src]="headerImage"  class="headerImage" alt="CajunTech" (click)="goToRootPage()">
-    
-        </div>
-        <div class="headerContactDiv">
-            <p class="bold_underline">Location:</p><br>
-            <a href="https://maps.app.goo.gl/zYCKUGB552DNLL2DA" target="_blank">
-            913 center st Suite 1B<br>
-            Evanston WY, 82930
-            </a><br>
-            <p class="bold_underline">Phone:</p><br>
-            <span id="phoneNumber" (click)="copyPhoneNumber()">Cell: (307) 679-2101</span><br>
-            <div class="copy-notification" *ngIf="showCopyNotification">Cell Copied!</div>
-         </div>
-        </div>
-    <div id="buttonsDiv">
-      <div  class="headerButtonCell"
-            style="cursor: pointer;"
-            *ngFor="let buttonLabel of buttonLabels;"
-            (click)="onButtonClick(buttonLabel)"
-            routerLink="{{buttonLabel}}">
-        <a id="headerLinkText" 
-            class="headerLinkText" 
-            routerLink="{{buttonLabel}}">
-          {{buttonLabel}}</a>
-      </div>
+  </div>
+  <div id="buttonsDiv">
+    <div class="headerButtonCell" style="cursor: pointer;" *ngFor="let buttonLabel of buttonLabels;"
+      (click)="onButtonClick(buttonLabel)" routerLink="{{buttonLabel}}">
+      <a id="headerLinkText" class="headerLinkText" routerLink="{{buttonLabel}}">
+        {{buttonLabel === 'Users' ? 'Users' : buttonLabel}}</a>
     </div>
-    <br>
-  </header>
+  </div>
+  <br>
+</header>

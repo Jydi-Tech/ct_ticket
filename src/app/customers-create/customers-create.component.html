@@ -1,44 +1,47 @@
-<div class="customers">
-    <input type="text" #FirstName placeholder="First Name" required>
-    <input type="text" #LastName placeholder="Last Name" required>
-    <input type="tel" #PhoneNumber placeholder="Phone Number" required>
-    <input type="text" #Address placeholder="Address" required>
-    <input type="text" #City placeholder="City" required>
-    <input type="text" #State placeholder="State" required>
-    <input type="number" #ZipCode placeholder="Zip Code" required>
-    <input type="email" #Email placeholder="Email" required>
-    <input type="text" #ReferralSource placeholder="Referral Source" list="referral" required>
-    <datalist id="referral">
-        <option value="Website">
-        <option value="Radio Ad">
-        <option value="Friend or Family">
-        <option value="Another Business">
-        <option value="Returning Customer">
-        <option value="Other">
-    </datalist>
-    <!-- (click) passes input value to addCustomer() and then clears the input -->
-    <button (click)="
-    addCustomer(
-        FirstName.value, 
-        LastName.value, 
-        Email.value, 
-        PhoneNumber.value, 
-        Address.value, 
-        City.value, 
-        State.value, 
-        ZipCode.value, 
-        ReferralSource.value
-    ); 
-    FirstName.value=''; 
-    LastName.value=''; 
-    Email.value=''; 
-    PhoneNumber.value=''; 
-    Address.value=''; 
-    City.value=''; 
-    State.value=''; 
-    ZipCode.value=''; 
-    ReferralSource.value='';
-    ">
-        Add Customer
-    </button>
+<div class="customers-create-container">
+  <h2>New Customer</h2>
+  <form [formGroup]="createForm" (ngSubmit)="addCustomer()" class="customers-form">
+    <div class="form-group">
+      <input type="text" formControlName="FirstName" placeholder="First Name" required>
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="LastName" placeholder="Last Name" required>
+    </div>
+    <div class="form-group">
+      <input type="tel" formControlName="PhoneNumber" placeholder="Phone Number" required>
+    </div>
+    <div class="form-group">
+      <input type="email" formControlName="Email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="Address" placeholder="Address" required>
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="Address2" placeholder="Address 2">
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="City" placeholder="City" required>
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="State" placeholder="State" required>
+    </div>
+    <div class="form-group">
+      <input type="number" formControlName="ZipCode" placeholder="Zip Code" required>
+    </div>
+    <div class="form-group">
+      <div class="dropdown-container">
+        <input type="text" formControlName="ReferralSource" placeholder="Referral Source" list="referral" required>
+        <datalist id="referral">
+          <option value="Website">
+          <option value="Radio Ad">
+          <option value="Friend or Family">
+          <option value="Another Business">
+          <option value="Returning Customer">
+          <option value="Other">
+        </datalist>
+        <div class="dropdown-arrow">&#9662;</div>
+      </div>
+    </div>
+    <button type="submit" class="submit-button">Add Customer</button>
+  </form>
 </div>

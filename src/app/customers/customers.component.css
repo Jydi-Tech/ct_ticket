@@ -23,6 +23,16 @@ body {
   color: var(--text-color);
 }
 
+.error-message {
+  color: red;
+  background-color: #f8d7da;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+
 .search {
   margin-bottom: 2rem;
 }
@@ -70,7 +80,7 @@ th {
 }
 
 th:nth-child(1), td:nth-child(1) {
-  min-width: 12vw;
+  min-width: 0vw;
   max-width: 12vw;
 }
 
@@ -120,7 +130,7 @@ th.actions-header {
 }
 
   /* Action buttons styling */
-  .customer-actions {
+  .user-actions {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -142,30 +152,33 @@ th.actions-header {
   text-align: center;
 }
 
-
-
 .action-button:hover {
   background-color: var(--hover-bg-color);
 }
 
-.edit-button {
-  background-color: #4CAF50;
-  color: white;
+.edit-image {
+  max-height: 2.5rem;
 }
 
-.delete-button {
-  background-color: #f44336;
-  color: white;
+.trash-image {
+  max-height: 2.2rem;
 }
 
 .apply-button {
-  background-color: #008CBA;
+  background-color: #009425;
   color: white;
+}
+.apply-button:hover {
+  background-color: #00661a;
 }
 
 .cancel-button {
-  background-color: #cccccc;
-  color: black;
+  background-color: #a81900;
+  color: white;
+}
+.cancel-button:hover {
+  background-color: #791200;
+  
 }
 
 td input {
@@ -247,7 +260,7 @@ td input {
   td:nth-of-type(10):before { content: "Referral Source"; }
   td:nth-of-type(11):before { content: "Actions"; }
 
-  .customer-actions button {
+  .user-actions button {
     display: inline-block;
     margin-top: 0.5rem;
   }

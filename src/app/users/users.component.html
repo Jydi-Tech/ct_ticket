@@ -6,43 +6,13 @@
 </div>
 <ng-container *ngComponentOutlet="dynamicComponent;"></ng-container>
 
-<div class="displayCustomers">
-    <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-        <div *ngIf="errorDetails">
-          <div *ngIf="errorDetails.tickets">
-            <strong>Tickets:</strong>
-            <ul>
-              <li *ngFor="let ticket of errorDetails.tickets">t-{{ ticket }}</li>
-            </ul>
-          </div>
-          <div *ngIf="errorDetails.invoices">
-            <strong>Invoices:</strong>
-            <ul>
-              <li *ngFor="let invoice of errorDetails.invoices">i-{{ invoice }}</li>
-            </ul>
-          </div>
-          <div *ngIf="errorDetails.payments">
-            <strong>Payments:</strong>
-            <ul>
-              <li *ngFor="let payment of errorDetails.payments">Payment ID: {{ payment }}</li>
-            </ul>
-          </div>
-          <div *ngIf="errorDetails.charges">
-            <strong>Charges:</strong>
-            <ul>
-              <li *ngFor="let charge of errorDetails.charges">Charge ID: {{ charge }}</li>
-            </ul>
-          </div>
-        </div>
-        <button (click)="clearErrorMessage()">Close</button>
-      </div>
+<div class="displayUsers">
     <table [formGroup]="editForm">
         <thead>
             <!--This is the sorting fuctionality-->
             <tr>
                 <th class="Search-by">Search by:</th>
-                <th *ngFor="let header of customerHeaders">
+                <th *ngFor="let header of userHeaders">
                     <input type="text" (input)="searchTable($event, header)" [placeholder]="header"
                         [title]="'Search by ' + header">
                 </th>
@@ -51,12 +21,12 @@
             <!--This is the header fuction-->
             <tr>
                 <th></th>
-                <th (click)="sortTable('CustomerID')">{{Label.CustomerID}} <span
-                        [ngClass]="getSortIcon('CustomerID')"></span></th>
+                <th (click)="sortTable('UserID')">{{Label.UserID}} <span [ngClass]="getSortIcon('UserID')"></span></th>
                 <th (click)="sortTable('FirstName')">{{Label.FirstName}} <span
                         [ngClass]="getSortIcon('FirstName')"></span></th>
                 <th (click)="sortTable('LastName')">{{Label.LastName}} <span [ngClass]="getSortIcon('LastName')"></span>
                 </th>
+                <th (click)="sortTable('Role')">{{Label.Role}} <span [ngClass]="getSortIcon('Role')"></span></th>
                 <th (click)="sortTable('Address')">{{Label.Address}} <span [ngClass]="getSortIcon('Address')"></span>
                 </th>
                 <th (click)="sortTable('Address2')">{{Label.Address2}} <span [ngClass]="getSortIcon('Address2')"></span>
@@ -68,50 +38,49 @@
                 <th (click)="sortTable('PhoneNumber')">{{Label.PhoneNumber}}<span
                         [ngClass]="getSortIcon('PhoneNumber')"></span></th>
                 <th (click)="sortTable('Email')">{{Label.Email}}<span [ngClass]="getSortIcon('Email')"></span></th>
-                <th (click)="sortTable('ReferralSource')">{{Label.ReferralSource}}<span
-                        [ngClass]="getSortIcon('ReferralSource')"></span></th>
+                <th (click)="sortTable('Password')">{{Label.Password}}<span [ngClass]="getSortIcon('Email')"></span>
+                </th>
                 <th></th>
             </tr>
         </thead>
 
         <tbody>
 
-            <tr *ngFor="let customer of filteredCustomers">
-                <td class="customer-actions"> <!-- if editing is true make the cancel button show else make it edit-->
-                    <ng-container *ngIf="editingCustomerId === customer.CustomerID; else viewActions">
+            <tr *ngFor="let User of filteredUsers">
+                <td class="User-actions"> <!-- if editing is true make the cancel button show else make it edit-->
+                    <ng-container *ngIf="editingUserId === User.UserID; else viewActions">
                         <div class="action-buttons">
-                            <div class="action-button cancel-button" (click)="cancelCustomer()">Cancel</div>
+                            <div class="action-button cancel-button" (click)="cancelUser()">Cancel</div>
                         </div>
                     </ng-container>
                     <ng-template #viewActions>
-                        <img class="edit-image" [src]="editImage" alt="edit"
-                            (click)="editCustomer(customer.CustomerID)">
+                        <img class="edit-image" [src]="editImage" alt="edit" (click)="editUser(User.UserID)">
                     </ng-template>
                 </td>
-                <!--customer id column-->
-                <td>{{customer.CustomerID}}</td>
+                <!--User id column-->
+                <td>{{User.UserID}}</td>
                 <!---------------------------------------------------------------------------->
                 <!-- if in editing mode make the fields editable else just display the text-->
-                <td *ngFor="let field of customerFields">
-                    <ng-container *ngIf="editingCustomerId === customer.CustomerID; else viewField" >
-                        <input [formControlName]="field" (keydown.enter)="applyCustomer()">
+                <td *ngFor="let field of userFields">
+                    <ng-container *ngIf="editingUserId === User.UserID; else viewField">
+                        <input [formControlName]="field" (keydown.enter)="applyUser()">
                     </ng-container>
-                    <ng-template #viewField>{{customer[field]}}</ng-template>
+                    <ng-template #viewField>{{User[field]}}</ng-template>
                 </td>
                 <!--end of that section---------------------------------------------------------------------->
                 <!------------------------------------------------------------------------------------------->
                 <td><!-- if editing is true make the apply button show else make it edit-->
-                    <ng-container *ngIf="editingCustomerId === customer.CustomerID; else viewDelete">
+                    <ng-container *ngIf="editingUserId === User.UserID; else viewDelete">
                         <div class="action-buttons">
-                            <div class="action-button apply-button" (click)="applyCustomer()">Apply</div>
+                            <div class="action-button apply-button" (click)="applyUser()">Apply</div>
                         </div>
                     </ng-container>
                     <ng-template #viewDelete>
-                        <img class="trash-image" [src]="trashImage" alt="delete"
-                            (click)="deleteCustomer(customer.CustomerID)">
+                        <img class="trash-image" [src]="trashImage" alt="delete" (click)="deleteUser(User.UserID)">
                     </ng-template>
                 </td>
             </tr>
         </tbody>
+
     </table>
 </div>

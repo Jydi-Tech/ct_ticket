@@ -8,3 +8,15 @@ body {
     height: 100%;
 }
 
+:root {
+    --bg-color: #121212 !important;
+    --text-color: #ffffff !important;
+    --border-color: #3b3b3b !important;
+    --input-bg-color: #1e1e1e;
+    --button-bg-color: #007bff;
+    --button-hover-bg-color: #0056b3;
+    --input-focus-border-color: #007bff;
+    --input-focus-box-shadow: rgba(0, 123, 255, 0.5);
+    --input-border-color: #666666; /* New color for input borders */
+  }
+
