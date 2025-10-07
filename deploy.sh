@@ -1,21 +1,20 @@
 #!/bin/bash
 PASSWORD=$(cat ~/password.txt)
-DEPLOY_DIR="/var/www/html/ct_ticket_dist"
+DEPLOY_DIR="/svr/html/ct_ticket_dist"
+BUILD_DIR="/srv/http/ct_ticket/dist/ct_ticket/browser"
 
-mkdir "$DEPLOY_DIR"
+# Ensure destination exists
+echo $PASSWORD | sudo -S mkdir -p "$DEPLOY_DIR"
 
-# Change ownership to the current user for copying
-echo $PASSWORD | sudo chmod 777 "$DEPLOY_DIR"
-echo $PASSWORD | sudo chown -R $USER:$USER "$DEPLOY_DIR"
+# Give current user temporary permissions
+echo $PASSWORD | sudo -S chown -R $USER:$USER "$DEPLOY_DIR"
 
 # Build and Copy Files
 echo "Building Angular project..."
 ng build --configuration=apache
-cp -R dist/ct_ticket/browser/* "$DEPLOY_DIR"
+cp -R "$BUILD_DIR"/* "$DEPLOY_DIR"
 
-# Change ownership back to the web server user
-#sudo chown -R www-data:www-data "$DEPLOY_DIR"
+# Restore Apache ownership
+echo $PASSWORD | sudo -S chown -R http:http "$DEPLOY_DIR"
 
 echo "Deployment complete."
-
-

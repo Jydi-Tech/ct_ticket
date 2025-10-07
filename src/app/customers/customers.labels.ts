@@ -24,7 +24,7 @@ export const CUSTOMER_BUTTON_LABELS : string[] = new Array(
     Address2: 'Address2',
     City: 'City',
     State: 'State',
-    ZipCode: 'Zip Code',
+    ZipCode: 'Zip',
     PhoneNumber: 'Phone #',
     Email: 'Email',
     ReferralSource: 'Referral Source',

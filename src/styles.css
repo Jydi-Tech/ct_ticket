@@ -9,6 +9,7 @@ body {
 }
 
 :root {
+    /* create db row style start */
     --bg-color: #121212 !important;
     --text-color: #ffffff !important;
     --border-color: #3b3b3b !important;
@@ -17,6 +18,381 @@ body {
     --button-hover-bg-color: #0056b3;
     --input-focus-border-color: #007bff;
     --input-focus-box-shadow: rgba(0, 123, 255, 0.5);
-    --input-border-color: #666666; /* New color for input borders */
+    --input-border-color: #666666;
+    --alt-row-bg-color: #202020;
+    /* New color for input borders */
+    /* create db row style end */
+}
+
+/* :root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --border-color: #dddddd;
+    --header-bg-color: #f2f2f2;
+    --hover-bg-color: #f1f1f1;
+    --alt-row-bg-color: #f9f9f9;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+      --border-color: #444444;
+      --header-bg-color: #1e1e1e;
+      --hover-bg-color: #333333;
+      --alt-row-bg-color: #797979;
+    }
+  } */
+
+/* ////////////////////////////////////////////////////////// */
+/* /////////////////start db search table results//////////// */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
   }
 
+.error-message {
+    color: red;
+    background-color: #f8d7da;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+}
+
+/* search stuff */
+.search {
+    margin-bottom: 2rem;
+}
+
+.search input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.search button {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: var(--header-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.search button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+/* table stuff */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+th,
+td {
+    border: 1px solid var(--border-color);
+    text-align: left;
+    padding: 0.5rem;
+}
+
+th {
+    background-color: var(--header-bg-color);
+    cursor: pointer;
+    position: relative;
+    min-width: 5vw;
+    padding-right: 1.4rem;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+    min-width: 0vw;
+    max-width: 12vw;
+}
+
+th .sort-asc::after,
+th .sort-desc::after {
+    content: '';
+    margin-left: 0.8rem;
+}
+
+th .sort-desc::after {
+    content: '▼';
+    position: absolute;
+    right: 0.8rem;
+}
+
+th input[type="text"] {
+    width: calc(100% - 1rem);
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+th input[type="text"]::placeholder {
+    opacity: 0;
+}
+
+th input[type="text"]:hover::placeholder {
+    opacity: 1;
+}
+
+tr:nth-child(even) {
+    background-color: var(--alt-row-bg-color);
+    box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
+}
+
+tr:hover {
+    background-color: var(--hover-bg-color);
+}
+
+th.actions-header {
+    text-align: center;
+}
+
+/* Action buttons styling */
+.user-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-top: .5rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-button {
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    background-color: var(--header-bg-color);
+    text-align: center;
+}
+
+.action-button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+.edit-image {
+    max-height: 2.5rem;
+}
+
+.trash-image {
+    max-height: 2.2rem;
+}
+
+.apply-button {
+    background-color: #009425;
+    color: white;
+}
+
+.apply-button:hover {
+    background-color: #00661a;
+}
+
+.cancel-button {
+    background-color: #a81900;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #791200;
+
+}
+
+td input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    #buttonsDiv {
+        grid-template-columns: repeat(4, minmax(100px, 1fr));
+        border-top: 2px solid rgb(10, 8, 15);
+        border-bottom: 2px solid rgb(10, 8, 15);
+    }
+
+    #linkText {
+        font-size: 3.2vw;
+    }
+
+    .headerButton {
+        font-size: x-large;
+    }
+
+    .spaceAfterButtons {
+        margin-top: 1%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    tr {
+        margin-bottom: 1rem;
+    }
+
+    th {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    td:before {
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        width: 45%;
+        padding-right: 1rem;
+        white-space: nowrap;
+        transform: translateY(-50%);
+        font-weight: bold;
+    }
+
+
+    .user-actions button {
+        display: inline-block;
+        margin-top: 0.5rem;
+    }
+}
+
+
+/* ////////////////start db search table results///////////// */
+/* ////////////////////////////////////////////////////////// */
+
+
+
+
+/* =============================================== */
+/*============start create db row==================*/
+.create-container {
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/*add new form*/
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    /* Adjust this value to control the spacing */
+}
+
+/* Error styling for invalid input fields */
+.has-error input,
+.has-error select {
+    border: 1px solid red;
+}
+
+/* Optional: Add background color to invalid fields */
+.has-error input:focus,
+.has-error select:focus {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+/* Regular input styling */
+input,
+select {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+}
+
+/* Focus state for inputs and select */
+input:focus,
+select:focus {
+    border-color: var(--input-focus-border-color);
+    outline: none;
+    box-shadow: 0 0 5px var(--input-focus-box-shadow);
+}
+
+/* Button styling */
+.submit-button {
+    padding: 1rem;
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    grid-column: span auto;
+}
+
+.submit-button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+.form {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    /* Automatically fill columns */
+    column-gap: 1rem;
+    row-gap: 1rem;
+    gap: 1.5rem
+}
+
+/* Media query for button on larger screens */
+@media (min-width: 600px) {
+    .submit-button {
+        grid-column: span 3;
+        /* Ensures button spans across 3 columns on medium screens */
+    }
+}
+
+@media (min-width: 900px) {
+    .submit-button {
+        grid-column: span 4;
+        /* Ensures button spans across 4 columns on large screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .form {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* //////end create db row///////////////////// */
+/* //////////////////////////////////////////// */

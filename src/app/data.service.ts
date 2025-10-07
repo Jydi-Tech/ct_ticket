@@ -26,7 +26,7 @@ export class DataService {
     //console.log(`POST request payload:`, itemData);
     return this.http.post(`${this.apiRoot}/${endpoint}/create.php`, itemData).pipe(
       catchError(error => {
-        console.error('An error occurred in createItem:', error);
+        console.error('An error occurred in createItem:', error, endpoint, itemData);
         return throwError(() => error);
       })
     );
@@ -78,11 +78,6 @@ export class DataService {
       headers: { 'Constent-Type': 'application/json' },
       body: { [idKey]: itemId }
     };
-    //console.log('endpoing: ', endpoint);
-    //console.log('number: ', itemId);
-    //console.log('DELETE request URL:', url);
-    //console.log('DELETE request options:', options);
-
     return this.http.delete(url, options).pipe(
       catchError(error => {
         console.error('An error occurred in deleteItem:', error);

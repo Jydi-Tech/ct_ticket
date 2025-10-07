@@ -1,1 +1,38 @@
-<p>tickets-create works!</p>
+<div class="create-container">
+    <h2>New Employee</h2>
+    <form [formGroup]="createForm" (ngSubmit)="addTicket()" class="form">
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Title')?.invalid && createForm.get('Title')?.touched}">
+        <input type="text" formControlName="Title" placeholder="title" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Description')?.invalid && createForm.get('Description')?.touched}">
+        <input type="text" formControlName="Description" placeholder="describe the problem" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Status')?.invalid && createForm.get('Status')?.touched}">
+        <select formControlName="Status" required>
+          <option value="" disabled>Select Status</option>
+          <option value="open">Open</option>
+          <option value="pending">Pending</option>
+          <option value="closed">Closed</option>
+        </select>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('Priority')?.invalid && createForm.get('Priority')?.touched}">
+        <select formControlName="Priority" required>
+          <option value="" disabled>Select Priority</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('DevicePassword')?.invalid && createForm.get('DevicePassword')?.touched}">
+        <input type="text" formControlName="DevicePassword" placeholder="Password" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('CustomerID')?.invalid && createForm.get('CustomerID')?.touched}">
+        <input type="text" formControlName="CustomerID" placeholder="Customer ID" required>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': createForm.get('AssignedTo')?.invalid && createForm.get('AssignedTo')?.touched}">
+        <input type="text" formControlName="AssignedTo" placeholder="Assigned to">
+      </div>
+      <button type="submit" class="submit-button">Add Ticket</button>
+    </form>
+  </div>
+  

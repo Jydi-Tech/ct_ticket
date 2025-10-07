@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, EmailValidator } from '@angular/forms';
 import { DataService } from '../data.service';
-import { createInjectableType } from '@angular/compiler';
 
 @Component({
   selector: 'app-users-create',
@@ -15,6 +14,8 @@ import { createInjectableType } from '@angular/compiler';
 
 })
 export class UsersCreateComponent {
+  @Output() formSubmitSuccess = new EventEmitter<void>(); // Event emitter to notify parent
+
   createForm: FormGroup;
 
   constructor(private dataService: DataService, private fb: FormBuilder) {
@@ -40,18 +41,15 @@ export class UsersCreateComponent {
       console.log('new user:', newUser);
       this.dataService.createItem("users", newUser).subscribe({
         next: response => {
-          console.log('****user added!', response);
           this.createForm.reset();
-        }
-        ,
+          this.formSubmitSuccess.emit(); // Emit event when user is added
+          console.log('****user added!', response);
+        },
         error: error => console.error('Error adding customer****', error),
-        complete: () => {
-
-          console.log('Request complete')
-        }
+        complete: () => console.log('Request complete')
       });
     } else {
-      this.createForm.markAllAsTouched();
+
       console.error('Form is not valid');
     }
   }

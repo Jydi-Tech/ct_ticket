@@ -4,20 +4,37 @@
         <a id="linkText" class="linkText">{{buttonLabel}}</a>
     </div>
 </div>
-<ng-container *ngComponentOutlet="dynamicComponent;"></ng-container>
-
+<app-users-create *ngIf="dynamicComponent" (formSubmitSuccess)="handleFormSubmit()"></app-users-create>
 <div class="displayUsers">
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+        <div *ngIf="tickets">
+            <strong>Tickets:</strong>
+            <ul>
+                <li *ngFor="let ticket of tickets">t-{{ ticket }}</li>
+            </ul>
+        </div>
+        <div *ngIf="comments">
+            <strong>Comments:</strong>
+            <ul>
+                <li *ngFor="let comment of comments">c-{{ comment }}</li>
+            </ul>
+        </div>
+    </div>
+    
     <table [formGroup]="editForm">
         <thead>
+            <!-- ------------------------------------------------- -->
             <!--This is the sorting fuctionality-->
             <tr>
                 <th class="Search-by">Search by:</th>
-                <th *ngFor="let header of userHeaders">
-                    <input type="text" (input)="searchTable($event, header)" [placeholder]="header"
+                <th *ngFor="let header of userHeaders">                    
+                    <input type="text" (input)="searchTable($event, header)" [placeholder]="getLabel(header)"
                         [title]="'Search by ' + header">
                 </th>
                 <th><!--place holder--></th>
             </tr>
+            <!-- -------------------------------------------- -->
             <!--This is the header fuction-->
             <tr>
                 <th></th>
@@ -38,8 +55,7 @@
                 <th (click)="sortTable('PhoneNumber')">{{Label.PhoneNumber}}<span
                         [ngClass]="getSortIcon('PhoneNumber')"></span></th>
                 <th (click)="sortTable('Email')">{{Label.Email}}<span [ngClass]="getSortIcon('Email')"></span></th>
-                <th (click)="sortTable('Password')">{{Label.Password}}<span [ngClass]="getSortIcon('Email')"></span>
-                </th>
+                <th>{{Label.Password}} </th>
                 <th></th>
             </tr>
         </thead>
@@ -59,14 +75,19 @@
                 </td>
                 <!--User id column-->
                 <td>{{User.UserID}}</td>
-                <!---------------------------------------------------------------------------->
+                <!---data section below---to make the field special remove it from userFields---------------------------------------------------------->
                 <!-- if in editing mode make the fields editable else just display the text-->
                 <td *ngFor="let field of userFields">
                     <ng-container *ngIf="editingUserId === User.UserID; else viewField">
                         <input [formControlName]="field" (keydown.enter)="applyUser()">
                     </ng-container>
+
                     <ng-template #viewField>{{User[field]}}</ng-template>
                 </td>
+                <td (click)="resetPassword('User.UserID')">
+                    TODO:<br> reset link</td>
+
+
                 <!--end of that section---------------------------------------------------------------------->
                 <!------------------------------------------------------------------------------------------->
                 <td><!-- if editing is true make the apply button show else make it edit-->
@@ -81,6 +102,5 @@
                 </td>
             </tr>
         </tbody>
-
     </table>
 </div>

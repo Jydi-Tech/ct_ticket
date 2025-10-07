@@ -1,6 +1,6 @@
-<div class="users-create-container">
+<div class="create-container">
     <h2>New Employee</h2>
-    <form [formGroup]="createForm" (ngSubmit)="addUser()" class="users-form">
+    <form [formGroup]="createForm" (ngSubmit)="addUser()" class="form">
       <div class="form-group" [ngClass]="{'has-error': createForm.get('FirstName')?.invalid && createForm.get('FirstName')?.touched}">
         <input type="text" formControlName="FirstName" placeholder="First Name" required>
       </div>

@@ -11,11 +11,12 @@ import { UsersCreateComponent } from '../users-create/users-create.component';
   selector: 'app-users',
   standalone: true,
   providers: [DataService],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, UsersCreateComponent],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+
   public dynamicComponent: any;
   public buttonLabels: string[] = Labels.USER_BUTTON_LABELS;
   private Table = Labels.USER_TABLE;
@@ -32,7 +33,6 @@ export class UsersComponent implements OnInit {
     this.Table.ZipCode,
     this.Table.PhoneNumber,
     this.Table.Email,
-    this.Table.Password
   ];
 
   public userHeaders: string[] = [
@@ -47,7 +47,6 @@ export class UsersComponent implements OnInit {
     this.Table.ZipCode,
     this.Table.PhoneNumber,
     this.Table.Email,
-    this.Table.Password
   ];
   users: any[] = [];
   filteredUsers: any[] = [];
@@ -58,6 +57,11 @@ export class UsersComponent implements OnInit {
   editForm: FormGroup;
   editImage: string = environment.imageUrl + "/edit.png";
   trashImage: string = environment.imageUrl + "/trash.png";
+  errorMessage: string | null = null;
+  errorDetails: any;
+  tickets: any;
+  comments: any;
+
 
   constructor(private dataService: DataService, private fb: FormBuilder) {
     this.editForm = this.fb.group({
@@ -78,6 +82,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.fetchUsers();
   }
+  
   onButtonClick(buttonLabel: string) {
     switch (buttonLabel) {
       case '+ New User':
@@ -95,13 +100,17 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  handleFormSubmit() {
+    this.fetchUsers(); // Call fetchUsers when the child emits the submit event
+  }
+
   fetchUsers() {
     this.dataService.getItem("users").subscribe({
       next: response => {
         this.users = response;
         this.filteredUsers = response;
         this.sortTable(this.currentSortColumn);  //apply current sort
-        console.log('Users retrieved!', this.users);
+        //console.log('Users retrieved!', this.users);
       },
       error: error => console.error('Error retrieving Users', error),
       complete: () => console.log('Request complete') // Optional if you need to handle completion
@@ -115,14 +124,22 @@ export class UsersComponent implements OnInit {
           console.log('User deleted!', response);
           this.fetchUsers(); // Refresh the list after deletion
         },
-        error: error => {
-          
-          console.error('Error deleting user', error)},
+        error: error => {          
+          console.error('Error deleting user', error);
+          this.errorMessage = error.error.message;
+          this.tickets = error.error.tickets;
+          this.comments = error.error.comments;
+        },
         complete: () => console.log('Request complete')
       });
     } else {
       console.log('not deleted due to selection.');
     }
+  }
+
+  clearErrorMessage() {
+    this.errorMessage = null;
+    this.errorDetails = null;
   }
   
   editUser(userID: number) {
@@ -147,6 +164,11 @@ export class UsersComponent implements OnInit {
 
   cancelUser() {
     this.editingUserId = null;
+  }
+
+  resetPassword(userID: string) {
+    console.log('TODO: Make a reset password pop up window with some kind of verification or admin requirements');
+
   }
 
   sortTable(column: string) {
@@ -207,5 +229,10 @@ export class UsersComponent implements OnInit {
       error: error => console.error('Error adding user', error),
       complete: () => console.log('Request complete') // Optional if you need to handle completion
     });
+  }
+
+  // Map header (field name) to user-friendly label
+  getLabel(header: string): string {
+    return this.Label[header as keyof typeof this.Label] || header;
   }
 }

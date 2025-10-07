@@ -1,1 +1,92 @@
-<p>tickets works!</p>
+<div id="buttonsDiv">
+    <div class="buttonCell" style="cursor: pointer;" *ngFor="let buttonLabel of buttonLabels;"
+        (click)="onButtonClick(buttonLabel)">
+        <a id="linkText" class="linkText">{{buttonLabel}}</a>
+    </div>
+</div>
+<app-tickets-create *ngIf="dynamicComponent" (formSubmitSuccess)="handleFormSubmit()"></app-tickets-create>
+<div class="displayTickets">
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+        <div *ngIf="users">
+            <strong>User:</strong>
+            <ul>
+                <li *ngFor="let user of users">t-{{ user }}</li>
+            </ul>
+        </div>
+        <div *ngIf="customers">
+            <strong>Customer:</strong>
+            <ul>
+                <li *ngFor="let customer of customers">c-{{ customer }}</li>
+            </ul>
+        </div>
+    </div>
+    
+    <table [formGroup]="editForm">
+        <thead>
+            <!-- ------------------------------------------------- -->
+            <!--This is the sorting fuctionality-->
+            <tr>
+                <th class="Search-by">Search by:</th>
+                <th *ngFor="let header of ticketHeaders">                    
+                    <input type="text" (input)="searchTable($event, header)" [placeholder]="getLabel(header)"
+                        [title]="'Search by ' + header">
+                </th>
+                <th><!--place holder--></th>
+            </tr>
+            <!-- -------------------------------------------- -->
+            <!--This is the header fuction-->
+            <tr>
+                <th></th>
+                <th (click)="sortTable('TicketID')">{{Label.TicketID}} <span [ngClass]="getSortIcon('TicketID')"></span></th>
+                <th (click)="sortTable('Title')">{{Label.Title}} <span [ngClass]="getSortIcon('Title')"></span></th>
+                <th (click)="sortTable('Description')">{{Label.Description}} <span [ngClass]="getSortIcon('Description')"></span></th>
+                <th (click)="sortTable('Status')">{{Label.Status}} <span [ngClass]="getSortIcon('Status')"></span></th>
+                <th (click)="sortTable('Priority')">{{Label.Priority}} <span [ngClass]="getSortIcon('Priority')"></span></th>
+                <th (click)="sortTable('DevicePassword')">{{Label.DevicePassword}} <span [ngClass]="getSortIcon('DevicePassword')"></span></th>
+                <th (click)="sortTable('CustomerID')">{{Label.CustomerID}} <span [ngClass]="getSortIcon('CustomerID')"></span></th>
+                <th (click)="sortTable('AssignedTo')">{{Label.AssignedTo}} <span [ngClass]="getSortIcon('AssignedTo')"></span></th>
+                <th (click)="sortTable('CreatedAt')">{{Label.CreatedAt}}<span [ngClass]="getSortIcon('CreatedAt')"></span></th>
+                <th (click)="sortTable('UpdatedAt')">{{Label.UpdatedAt}}<span [ngClass]="getSortIcon('UpdatedAt')"></span></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let Ticket of filteredTickets">
+                <td class="Ticket-actions"> <!-- if editing is true make the cancel button show else make it edit-->
+                    <ng-container *ngIf="editingTicketId === Ticket.TicketID; else viewActions">
+                        <div class="action-buttons">
+                            <div class="action-button cancel-button" (click)="cancelTicket()">Cancel</div>
+                        </div>
+                    </ng-container>
+                    <ng-template #viewActions>
+                        <img class="edit-image" [src]="editImage" alt="edit" (click)="editTicket(Ticket.TicketID)">
+                    </ng-template>
+                </td>
+                <!--Ticket id column-->
+                <td>{{Ticket.TicketID}}</td>
+                <!---data section below---to make the field special remove it from ticketFields---------------------------------------------------------->
+                <!-- if in editing mode make the fields editable else just display the text-->
+                <td *ngFor="let field of ticketFields">
+                    <ng-container *ngIf="editingTicketId === Ticket.TicketID; else viewField">
+                        <input [formControlName]="field" (keydown.enter)="applyTicket()">
+                    </ng-container>
+
+                    <ng-template #viewField>{{Ticket[field]}}</ng-template>
+                </td>
+                <!--end of that section---------------------------------------------------------------------->
+                <!------------------------------------------------------------------------------------------->
+                <td><!-- if editing is true make the apply button show else make it edit-->
+                    <ng-container *ngIf="editingTicketId === Ticket.TicketID; else viewDelete">
+                        <div class="action-buttons">
+                            <div class="action-button apply-button" (click)="applyTicket()">Apply</div>
+                        </div>
+                    </ng-container>
+                    <ng-template #viewDelete>
+                        <img class="trash-image" [src]="trashImage" alt="delete" (click)="deleteTicket(Ticket.TicketID)">
+                    </ng-template>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

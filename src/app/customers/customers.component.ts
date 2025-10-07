@@ -11,11 +11,12 @@ import * as Labels from './customers.labels';
   selector: 'app-customers',
   standalone: true,
   providers: [DataService],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, CustomersCreateComponent],
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css'],
 })
 export class CustomersComponent implements OnInit {
+
   public dynamicComponent: any;
   public buttonLabels: string[] = Labels.CUSTOMER_BUTTON_LABELS;
   private Table = Labels.CUSTOMER_TABLE;
@@ -94,13 +95,17 @@ export class CustomersComponent implements OnInit {
     }
   }
 
+  handleFormSubmit() {
+    this.fetchCustomers();
+  }
+
   fetchCustomers() {
     this.dataService.getItem("customers").subscribe({
       next: response => {
         this.customers = response;
         this.filteredCustomers = response;
         this.sortTable(this.currentSortColumn); // Apply current sort
-        console.log('Customers retrieved!', this.customers);
+        //console.log('Customers retrieved!', this.customers);
       },
       error: error => console.error('Error retrieving customers', error),
       complete: () => console.log('Request complete') // Optional if you need to handle completion
@@ -108,7 +113,7 @@ export class CustomersComponent implements OnInit {
   }
 
   deleteCustomer(customerID: number) {
-    if (confirm('Are you sure you want to delete this item?')) {
+    if (confirm('Are you sure you want to delete this item?: ' + customerID)) {
       this.dataService.deleteItem("customers", customerID).subscribe({
         next: response => {
           console.log('Customer deleted!', response);
@@ -125,7 +130,7 @@ export class CustomersComponent implements OnInit {
       console.log('not deleted due to selection.');
     }
   }
-
+  
   clearErrorMessage() {
     this.errorMessage = null;
     this.errorDetails = null;
@@ -198,6 +203,10 @@ export class CustomersComponent implements OnInit {
         this.filteredCustomers.push(this.customers[customer]);
       }
     }
+  }
+  getLabel(header : string) : string{
+    return this.Label[header as keyof typeof this.Label] || header;
+ 
   }
 
 }

@@ -4,46 +4,47 @@
         <a id="linkText" class="linkText">{{buttonLabel}}</a>
     </div>
 </div>
-<ng-container *ngComponentOutlet="dynamicComponent;"></ng-container>
-
+<app-customers-create *ngIf="dynamicComponent" (formSubmitSucess)="handleFormSubmit()"></app-customers-create>
 <div class="displayCustomers">
+
+    <!-- error message secion -->
     <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}
         <div *ngIf="errorDetails">
-          <div *ngIf="errorDetails.tickets">
-            <strong>Tickets:</strong>
-            <ul>
-              <li *ngFor="let ticket of errorDetails.tickets">t-{{ ticket }}</li>
-            </ul>
-          </div>
-          <div *ngIf="errorDetails.invoices">
-            <strong>Invoices:</strong>
-            <ul>
-              <li *ngFor="let invoice of errorDetails.invoices">i-{{ invoice }}</li>
-            </ul>
-          </div>
-          <div *ngIf="errorDetails.payments">
-            <strong>Payments:</strong>
-            <ul>
-              <li *ngFor="let payment of errorDetails.payments">Payment ID: {{ payment }}</li>
-            </ul>
-          </div>
-          <div *ngIf="errorDetails.charges">
-            <strong>Charges:</strong>
-            <ul>
-              <li *ngFor="let charge of errorDetails.charges">Charge ID: {{ charge }}</li>
-            </ul>
-          </div>
+            <div *ngIf="errorDetails.tickets">
+                <strong>Tickets:</strong>
+                <ul>
+                    <li *ngFor="let ticket of errorDetails.tickets">t-{{ ticket }}</li>
+                </ul>
+            </div>
+            <div *ngIf="errorDetails.invoices">
+                <strong>Invoices:</strong>
+                <ul>
+                    <li *ngFor="let invoice of errorDetails.invoices">i-{{ invoice }}</li>
+                </ul>
+            </div>
+            <div *ngIf="errorDetails.payments">
+                <strong>Payments:</strong>
+                <ul>
+                    <li *ngFor="let payment of errorDetails.payments">Payment ID: {{ payment }}</li>
+                </ul>
+            </div>
+            <div *ngIf="errorDetails.charges">
+                <strong>Charges:</strong>
+                <ul>
+                    <li *ngFor="let charge of errorDetails.charges">Charge ID: {{ charge }}</li>
+                </ul>
+            </div>
         </div>
         <button (click)="clearErrorMessage()">Close</button>
-      </div>
+    </div>
     <table [formGroup]="editForm">
         <thead>
             <!--This is the sorting fuctionality-->
             <tr>
                 <th class="Search-by">Search by:</th>
                 <th *ngFor="let header of customerHeaders">
-                    <input type="text" (input)="searchTable($event, header)" [placeholder]="header"
+                    <input type="text" (input)="searchTable($event, header)" [placeholder]="getLabel(header)"
                         [title]="'Search by ' + header">
                 </th>
                 <th><!--place holder--></th>
@@ -93,7 +94,7 @@
                 <!---------------------------------------------------------------------------->
                 <!-- if in editing mode make the fields editable else just display the text-->
                 <td *ngFor="let field of customerFields">
-                    <ng-container *ngIf="editingCustomerId === customer.CustomerID; else viewField" >
+                    <ng-container *ngIf="editingCustomerId === customer.CustomerID; else viewField">
                         <input [formControlName]="field" (keydown.enter)="applyCustomer()">
                     </ng-container>
                     <ng-template #viewField>{{customer[field]}}</ng-template>

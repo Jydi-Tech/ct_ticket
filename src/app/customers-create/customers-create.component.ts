@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,6 +14,8 @@ import { DataService } from '../data.service';
 
 })
 export class CustomersCreateComponent {
+  @Output() formSubmitSuccess = new EventEmitter<void>(); // Event emitter to notify parent
+
   createForm: FormGroup;
 
   constructor(private dataService: DataService, private fb: FormBuilder) {
@@ -37,7 +39,11 @@ export class CustomersCreateComponent {
       console.log('Add Customer called');
       console.log('New Customer:', newCustomer);
       this.dataService.createItem("customers", newCustomer).subscribe({
-        next: response => console.log('****customer added!', response),
+        next: response =>{
+          this.createForm.reset();
+          this.formSubmitSuccess.emit();
+           console.log('****customer added!', response);           
+          },
         error: error => console.error('Error adding customer****', error),
         complete: () => console.log('Request complete')
       });
